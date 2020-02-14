@@ -1,7 +1,7 @@
 package cn.com.citydo.dtx.core.container;
 
-import cn.com.citydo.dtx.core.collectors.JobPluginCollector;
 import cn.com.citydo.consts.json.Configuration;
+import cn.com.citydo.dtx.common.spi.collectors.JobPluginCollector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

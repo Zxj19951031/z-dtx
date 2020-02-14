@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>citydo-dtx</artifactId>
-        <groupId>cn.com.zhuxj.dtx</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <groupId>cn.com.citydo.dtx</groupId>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -17,28 +17,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>cn.com.citydo.starter</groupId>
-            <artifactId>citydo-starter-utils</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.com.citydo.starter</groupId>
-            <artifactId>citydo-starter-const</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
+            <groupId>cn.com.citydo.dtx</groupId>
+            <artifactId>citydo-dtx-common</artifactId>
         </dependency>
     </dependencies>
 

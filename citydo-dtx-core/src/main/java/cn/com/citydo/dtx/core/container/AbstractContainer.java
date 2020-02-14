@@ -1,7 +1,7 @@
 package cn.com.citydo.dtx.core.container;
 
-import cn.com.citydo.dtx.core.collectors.PluginCollector;
 import cn.com.citydo.consts.json.Configuration;
+import cn.com.citydo.dtx.common.spi.collectors.PluginCollector;
 
 public abstract class AbstractContainer {
     protected Configuration allConfig;
