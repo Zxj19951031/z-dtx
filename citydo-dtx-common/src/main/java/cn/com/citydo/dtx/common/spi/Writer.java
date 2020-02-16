@@ -11,9 +11,6 @@ public abstract class Writer {
 
     public abstract class Job extends AbstractJobPlugin {
 
-        public Job(Configuration allConfig) {
-            super(allConfig);
-        }
 
         public abstract List<Configuration> split(int channel);
 
@@ -21,9 +18,7 @@ public abstract class Writer {
 
     public abstract class Task extends AbstractTaskPlugin {
 
-        public Task(Configuration allConfig) {
-            super(allConfig);
-        }
+
 
         public abstract void startWrite(RecordConsumer consumer);
 

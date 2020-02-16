@@ -6,11 +6,8 @@ import lombok.Data;
 @Data
 public abstract class AbstractPlugin {
     private String pluginName;
+    private Configuration pluginConfig;
     private Configuration allConfig;
-
-    public AbstractPlugin(Configuration allConfig) {
-        this.allConfig = allConfig;
-    }
 
     public abstract void init();
 
@@ -20,4 +17,11 @@ public abstract class AbstractPlugin {
 
     public abstract void destroy();
 
+    public void setPluginConf(Configuration pluginConf) {
+        this.pluginConfig = pluginConf;
+    }
+
+    public void setPluginJobConf(Configuration jobConf) {
+        this.allConfig = jobConf;
+    }
 }

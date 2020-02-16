@@ -1,0 +1,18 @@
+{
+  "task": {
+    "id": 1
+  },
+  "job": {
+    "reader": {
+      "name": "",
+      "parameter": {
+      }
+    },
+    "writer": {
+      "name": "",
+      "parameter": {
+      }
+    },
+    "transformer": []
+  }
+}

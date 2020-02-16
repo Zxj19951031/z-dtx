@@ -1,0 +1,14 @@
+{
+  "reader": {
+    "mysqlreader": {
+      "path": "",
+      "class": ""
+    }
+  },
+  "writer": {
+    "mysqlwriter": {
+      "path": "",
+      "class": ""
+    }
+  }
+}

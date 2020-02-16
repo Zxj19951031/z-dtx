@@ -1,0 +1,26 @@
+{
+  "job": {
+    "id": "undefined",
+    "content": {
+      "reader": {
+        "name": "***reader",
+        "parameter": {
+        }
+      },
+      "writer": {
+        "name": "***writer",
+        "parameter": {
+        }
+      }
+    },
+    "setting": {
+      "speed": {
+        "channel": 0
+      }
+    }
+  },
+  "tunnel": {
+    "bufferSize": 1000,
+    "byteCapacity": 8388608
+  }
+}

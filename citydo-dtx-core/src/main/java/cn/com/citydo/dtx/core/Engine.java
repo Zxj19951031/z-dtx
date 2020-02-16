@@ -6,6 +6,7 @@ import cn.com.citydo.dtx.common.spi.commons.CoreConstant;
 import cn.com.citydo.dtx.common.spi.commons.VMInfo;
 import cn.com.citydo.dtx.core.container.AbstractContainer;
 import cn.com.citydo.dtx.core.container.JobContainer;
+import cn.com.citydo.dtx.core.utils.LoadUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,6 +69,8 @@ public class Engine {
     public void start() {
 
         ColumnCast.bind(allConfig);
+
+        LoadUtil.bind();
 
         AbstractContainer container = new JobContainer(allConfig);
 

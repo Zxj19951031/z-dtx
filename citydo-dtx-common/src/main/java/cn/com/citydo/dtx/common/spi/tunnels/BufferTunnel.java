@@ -25,7 +25,7 @@ public class BufferTunnel implements RecordConsumer, RecordProducer {
 
     public BufferTunnel(Configuration tunnelConfig) {
         assert null != tunnelConfig;
-        this.bufferSize = tunnelConfig.getInt(CoreConstant.TUNNEL_BUFFER_SIZE, 1024);
+        this.bufferSize = tunnelConfig.getInt(CoreConstant.TUNNEL_BUFFER_SIZE, 1000);
         this.byteCapacity = tunnelConfig.getInt(CoreConstant.TUNNEL_BYTE_CAPACITY, 8 * 1024 * 1024);
         this.buffer = new ArrayList<>(this.bufferSize);
         this.queue = new BufferQueue(this.bufferSize);
@@ -72,6 +72,7 @@ public class BufferTunnel implements RecordConsumer, RecordProducer {
 
         if (record.getMemorySize() > this.byteCapacity) {
 
+            // TODO: 2020/2/14 单条记录的容量控制
 //            this.pluginCollector.collectDirtyRecord(record, new Exception(String.format("单条记录超过大小限制，当前限制为:%s", this.byteCapacity)));
             return;
         }
