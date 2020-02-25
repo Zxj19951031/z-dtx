@@ -4,6 +4,7 @@ import cn.com.citydo.consts.exceptions.SysException;
 import cn.com.citydo.consts.json.Configuration;
 import cn.com.citydo.dtx.common.spi.errors.CommonError;
 import cn.com.citydo.dtx.core.container.TaskContainer;
+import cn.com.citydo.dtx.core.enums.PluginStatus;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,7 @@ public class StandAloneScheduler extends AbstractScheduler {
         Validate.notNull(taskConfigs, "scheduler配置不能为空");
 
         int jobReportIntervalInMillSec = 30 * 1000;
+        int jobSleepIntervalInMillSec = 3 * 1000;
 
         try {
             taskContainers = new ArrayList<>(taskConfigs.size());
@@ -36,15 +38,30 @@ public class StandAloneScheduler extends AbstractScheduler {
 
             while (true) {
 
+                // TODO: 2020/2/14 汇报
+                int finished = 0;
+                boolean hasError = false;
+                for (TaskContainer taskContainer : taskContainers) {
+                    if (taskContainer.getStatus() == PluginStatus.ERROR) {
+                        logger.error("读写任务组存在异常");
+                        hasError = true;
+                        break;
+                    }
+                    if (taskContainer.getStatus() == PluginStatus.FINISH) {
+                        finished++;
+                        logger.info("累计完成读写任务共{}组", finished);
+                    }
+                }
+                if (hasError || finished == taskContainers.size())
+                    break;
 
-                // TODO: 2020/2/14 汇报间隔
-
-                Thread.sleep(jobReportIntervalInMillSec);
+                Thread.sleep(jobSleepIntervalInMillSec);
             }
         } catch (InterruptedException e) {
             logger.error("捕获到InterruptedException异常!", e);
             throw SysException.newException(CommonError.RUNTIME_ERROR, e);
         }
     }
+
 
 }

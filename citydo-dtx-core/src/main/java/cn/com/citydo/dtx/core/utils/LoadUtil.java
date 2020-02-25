@@ -8,15 +8,17 @@ import cn.com.citydo.dtx.common.spi.plugins.AbstractJobPlugin;
 import cn.com.citydo.dtx.common.spi.plugins.AbstractPlugin;
 import cn.com.citydo.dtx.common.spi.plugins.AbstractTaskPlugin;
 import cn.hutool.core.io.FileUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class LoadUtil {
 
     private static Configuration allConfig;
-    private static final String pluginTypeNameFormat = "plugin.%s.%s";
+    private static final String pluginTypeNameFormat = "%s.%s";
 
     private enum ContainerType {
         Job("Job"), Task("Task");
@@ -80,12 +82,12 @@ public class LoadUtil {
                                                   String pluginName) {
         Class<? extends AbstractPlugin> clazz = LoadUtil.loadPluginClass(
                 pluginType, pluginName, ContainerType.Job);
-
         try {
             AbstractJobPlugin jobPlugin = (AbstractJobPlugin) clazz.newInstance();
             jobPlugin.setPluginConf(getPluginConf(pluginType, pluginName));
             return jobPlugin;
         } catch (Exception e) {
+            log.error(e.getMessage(),e);
             throw SysException.newException(CommonError.RUNTIME_ERROR, e);
         }
     }
@@ -123,7 +125,8 @@ public class LoadUtil {
                     .loadClass(pluginConf.getString("class") + "$"
                             + pluginRunType.value());
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             throw SysException.newException(CommonError.RUNTIME_ERROR, e);
-    }
+        }
     }
 }

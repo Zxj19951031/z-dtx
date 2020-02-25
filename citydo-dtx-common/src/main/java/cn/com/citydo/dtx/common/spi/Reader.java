@@ -9,13 +9,13 @@ import java.util.List;
 
 public abstract class Reader {
 
-    public abstract class Job extends AbstractJobPlugin {
+    public static abstract class Job extends AbstractJobPlugin {
 
         public abstract List<Configuration> split(int channel);
 
     }
 
-    public abstract class Task extends AbstractTaskPlugin {
+    public static abstract class Task extends AbstractTaskPlugin {
 
 
         public abstract void startRead(RecordProducer producer);

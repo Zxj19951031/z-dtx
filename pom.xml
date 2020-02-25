@@ -11,6 +11,9 @@
     <modules>
         <module>citydo-dtx-core</module>
         <module>citydo-dtx-common</module>
+        <module>mysqlreader</module>
+        <module>mysqlwriter</module>
+        <module>streamwriter</module>
     </modules>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -59,6 +62,11 @@
             <dependency>
                 <groupId>cn.com.citydo.dtx</groupId>
                 <artifactId>citydo-dtx-common</artifactId>
+                <version>${dtx.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.com.citydo.dtx</groupId>
+                <artifactId>citydo-dtx-rdbms-plugin</artifactId>
                 <version>${dtx.version}</version>
             </dependency>
         </dependencies>

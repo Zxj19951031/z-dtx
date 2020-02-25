@@ -6,6 +6,9 @@ public abstract class AbstractJobPlugin extends AbstractPlugin {
 
     private JobPluginCollector jobPluginCollector;
 
+    public AbstractJobPlugin() {
+    }
+
     public JobPluginCollector getJobPluginCollector() {
         return jobPluginCollector;
     }

@@ -9,11 +9,18 @@ public abstract class AbstractPlugin {
     private Configuration pluginConfig;
     private Configuration allConfig;
 
+    public AbstractPlugin() {
+    }
+
     public abstract void init();
 
-    public abstract void prepare();
+    public void prepare() {
 
-    public abstract void post();
+    }
+
+    public void post() {
+
+    }
 
     public abstract void destroy();
 

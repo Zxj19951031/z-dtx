@@ -1,21 +1,36 @@
 {
   "job": {
-    "id": "undefined",
+    "id": "1",
     "content": {
       "reader": {
-        "name": "***reader",
+        "name": "mysqlreader",
         "parameter": {
+          "jdbcUrl": "jdbc:mysql://localhost:3306/citydo_sjzl?useUnicode=true&characterEncoding=utf-8",
+          "username": "root",
+          "password": "123456",
+          "table": "tb_source_info_odps",
+          "querySql": "select cus_name,'静态字段',id from tb_source_info_odps where 1=1"
         }
       },
       "writer": {
-        "name": "***writer",
+        "name": "mysqlwriter",
         "parameter": {
+          "jdbcUrl": "jdbc:mysql://localhost:3306/citydo_sjzl?useUnicode=true&characterEncoding=utf-8",
+          "username": "root",
+          "password": "123456",
+          "table": "tb_source_info_odps_copy",
+          "method": "replace",
+          "columns": [
+            "cus_name",
+            "access_id",
+            "id"
+          ]
         }
       }
     },
     "setting": {
       "speed": {
-        "channel": 0
+        "channel": 1
       }
     }
   },

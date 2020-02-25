@@ -7,6 +7,7 @@ import cn.com.citydo.dtx.common.spi.collectors.TaskPluginCollector;
 import cn.com.citydo.dtx.common.spi.commons.CoreConstant;
 import cn.com.citydo.dtx.common.spi.commons.PluginType;
 import cn.com.citydo.dtx.common.spi.tunnels.BufferTunnel;
+import cn.com.citydo.dtx.core.enums.PluginStatus;
 import cn.com.citydo.dtx.core.runner.ReaderRunner;
 import cn.com.citydo.dtx.core.runner.WriterRunner;
 import cn.com.citydo.dtx.core.utils.ClassLoaderSwapper;
@@ -48,20 +49,16 @@ public class TaskContainer extends AbstractContainer {
         this.writerRunner = new WriterRunner(this.tunnel, this.taskWriter);
 
         this.readerThread = new Thread(readerRunner);
-        this.readerThread.setName(taskId + "-reader");
+        this.readerThread.setName("reader-" + taskId);
         this.writerThread = new Thread(writerRunner);
-        this.writerThread.setName(taskId + "-writer");
+        this.writerThread.setName("writer-" + taskId);
 
         this.readerThread.start();
         this.writerThread.start();
-
-        while (true){
-
-        }
     }
 
     private Reader.Task initTaskReader() {
-        this.readerPluginName = this.allConfig.getString(CoreConstant.JOB_CONTENT_READER_NAME);
+        this.readerPluginName = this.allConfig.getString(CoreConstant.JOB_READER_NAME);
 
         classLoaderSwapper.setCurrentThreadClassLoader(LoadUtil.getJarLoader(
                 PluginType.READER, this.readerPluginName));
@@ -79,8 +76,7 @@ public class TaskContainer extends AbstractContainer {
     }
 
     private Writer.Task initTaskWriter() {
-        this.writerPluginName = this.allConfig.getString(
-                CoreConstant.JOB_CONTENT_WRITER_NAME);
+        this.writerPluginName = this.allConfig.getString(CoreConstant.JOB_WRITER_NAME);
         classLoaderSwapper.setCurrentThreadClassLoader(LoadUtil.getJarLoader(
                 PluginType.WRITER, this.writerPluginName));
 
@@ -89,7 +85,7 @@ public class TaskContainer extends AbstractContainer {
 
         // 设置writer的jobConfig
         jobWriter.setPluginJobConf(this.allConfig.getConfiguration(
-                CoreConstant.JOB_CONTENT_WRITER_PARAMETER));
+                CoreConstant.JOB_WRITER_PARAMETER));
 
         jobWriter.setTaskPluginCollector((TaskPluginCollector) this.pluginCollector);
 
@@ -99,5 +95,10 @@ public class TaskContainer extends AbstractContainer {
 
     public String getTaskId() {
         return taskId;
+    }
+
+    public PluginStatus getStatus() {
+        return readerRunner.getStatus().getKey() > writerRunner.getStatus().getKey()
+                ? readerRunner.getStatus() : writerRunner.getStatus();
     }
 }

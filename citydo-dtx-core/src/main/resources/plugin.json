@@ -1,0 +1,18 @@
+{
+  "reader": {
+    "mysqlreader": {
+      "path": "/Users/zhuxj/IdeaProjects/citydo-dtx/plugins/reader/mysqlreader",
+      "class": "cn.com.citydo.plugin.mysqlreader.MysqlReader"
+    }
+  },
+  "writer": {
+    "mysqlwriter": {
+      "path": "/Users/zhuxj/IdeaProjects/citydo-dtx/plugins/writer/mysqlwriter",
+      "class": "cn.com.citydo.plugin.mysqlwriter.MysqlWriter"
+    },
+    "streamwriter": {
+      "path": "/Users/zhuxj/IdeaProjects/citydo-dtx/plugins/writer/streamwriter",
+      "class": "cn.com.citydo.plugin.streamwriter.StreamWriter"
+    }
+  }
+}

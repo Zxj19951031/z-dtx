@@ -15,4 +15,5 @@ public abstract class AbstractScheduler {
      * @param taskConfigs
      */
     public abstract void schedule(List<Configuration> taskConfigs);
+
 }

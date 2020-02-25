@@ -54,20 +54,20 @@ public class JobContainer extends AbstractContainer {
             this.init();
             logger.debug("jobContainer starts to do split ...");
             this.totalStage = this.split();
-            logger.debug("jobContainer starts to do split ...");
+            logger.debug("jobContainer starts to do schedule ...");
             this.schedule();
+            logger.debug("jobContainer starts to do destroy ...");
+            this.destroy();
 
         } catch (Throwable e) {
-
-        } finally {
-
+            logger.error(e.getMessage(), e);
+            throw SysException.newException(e);
         }
     }
 
+
     private void init() {
         this.jobId = this.allConfig.getString(CoreConstant.JOB_ID);
-
-        Thread.currentThread().setName("job-" + this.jobId);
 
         //必须先Reader ，后Writer
         this.jobReader = this.initJobReader();
@@ -181,7 +181,7 @@ public class JobContainer extends AbstractContainer {
                     CommonError.PLUGIN_SPLIT_ERROR,
                     "writer切分的task不能小于等于0");
         }
-        logger.info("DataX Writer.Job [{}] splits to [{}] tasks.",
+        logger.info("Writer.Job [{}] splits to [{}] tasks.",
                 this.writerPluginName, writerSlicesConfigs.size());
         classLoaderSwapper.restoreCurrentThreadClassLoader();
         return writerSlicesConfigs;
@@ -247,10 +247,15 @@ public class JobContainer extends AbstractContainer {
     }
 
     private List<Configuration> mergeAllConfigToTaskConfig() {
-        List<Configuration> taskConfigs = this.allConfig.getList(CoreConstant.JOB_CONTENT, Configuration.class);
+        List<Configuration> taskConfigs = this.allConfig.getListConfiguration(CoreConstant.JOB_CONTENT);
         for (Configuration taskConfig : taskConfigs) {
             taskConfig.set(CoreConstant.TUNNEL, this.allConfig.getConfiguration(CoreConstant.TUNNEL));
         }
         return taskConfigs;
+    }
+
+    private void destroy() {
+        this.jobReader.destroy();
+        this.jobWriter.destroy();
     }
 }

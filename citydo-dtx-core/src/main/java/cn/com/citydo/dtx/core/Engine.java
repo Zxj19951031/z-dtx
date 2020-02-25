@@ -7,6 +7,7 @@ import cn.com.citydo.dtx.common.spi.commons.VMInfo;
 import cn.com.citydo.dtx.core.container.AbstractContainer;
 import cn.com.citydo.dtx.core.container.JobContainer;
 import cn.com.citydo.dtx.core.utils.LoadUtil;
+import cn.hutool.core.io.FileUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,8 @@ public class Engine {
         String jobId = allConfig.getString(CoreConstant.JOB_ID, "undefined");
         allConfig.set(CoreConstant.JOB_ID, jobId);
 
+
+        Thread.currentThread().setName("job-" + jobId);
         //打印vmInfo
         VMInfo vmInfo = VMInfo.getVmInfo();
         if (vmInfo != null) {
@@ -76,5 +79,17 @@ public class Engine {
 
         container.start();
 
+    }
+
+    public static void main(String[] args) {
+
+        try {
+            String a = FileUtil.readString("/Users/zhuxj/IdeaProjects/citydo-dtx/allConfig.json", "utf-8");
+
+            Engine engine = new Engine(Configuration.from(a));
+            engine.entry();
+        } catch (Throwable e) {
+            logger.error(e.getMessage(), e);
+        }
     }
 }
