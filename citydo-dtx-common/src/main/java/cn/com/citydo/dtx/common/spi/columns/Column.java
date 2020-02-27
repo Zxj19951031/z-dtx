@@ -1,5 +1,6 @@
 package cn.com.citydo.dtx.common.spi.columns;
 
+import com.alibaba.fastjson.JSON;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -22,6 +23,12 @@ public abstract class Column {
         this.byteSize = byteSize;
         this.data = data;
     }
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
+    }
+
 
     public abstract Long asLong();
 

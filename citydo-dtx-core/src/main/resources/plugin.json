@@ -1,18 +1,34 @@
 {
   "reader": {
     "mysqlreader": {
-      "path": "/Users/zhuxj/IdeaProjects/citydo-dtx/plugins/reader/mysqlreader",
+      "path": "plugin/reader/mysqlreader",
       "class": "cn.com.citydo.plugin.mysqlreader.MysqlReader"
+    },
+    "drdsreader": {
+      "path": "plugin/reader/drdsreader",
+      "class": "cn.com.citydo.plugin.drdsreader.DrdsReader"
+    },
+    "rocketmqreader": {
+      "path": "plugin/reader/rocketmqreader",
+      "class": "cn.com.citydo.plugin.rocketmqreader.RocketMqReader"
     }
   },
   "writer": {
     "mysqlwriter": {
-      "path": "/Users/zhuxj/IdeaProjects/citydo-dtx/plugins/writer/mysqlwriter",
+      "path": "plugin/writer/mysqlwriter",
       "class": "cn.com.citydo.plugin.mysqlwriter.MysqlWriter"
     },
     "streamwriter": {
-      "path": "/Users/zhuxj/IdeaProjects/citydo-dtx/plugins/writer/streamwriter",
+      "path": "plugin/writer/streamwriter",
       "class": "cn.com.citydo.plugin.streamwriter.StreamWriter"
+    },
+    "drdswriter": {
+      "path": "plugin/writer/drdswriter",
+      "class": "cn.com.citydo.plugin.drdswriter.DrdsWriter"
+    },
+    "rocketmqwriter": {
+      "path": "plugin/writer/rocketmqwriter",
+      "class": "cn.com.citydo.plugin.rocketmqwriter.RocketMqWriter"
     }
   }
 }

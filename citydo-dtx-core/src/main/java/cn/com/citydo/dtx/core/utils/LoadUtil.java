@@ -7,10 +7,13 @@ import cn.com.citydo.dtx.common.spi.errors.CommonError;
 import cn.com.citydo.dtx.common.spi.plugins.AbstractJobPlugin;
 import cn.com.citydo.dtx.common.spi.plugins.AbstractPlugin;
 import cn.com.citydo.dtx.common.spi.plugins.AbstractTaskPlugin;
-import cn.hutool.core.io.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,8 +36,15 @@ public class LoadUtil {
         }
     }
 
-    public static void bind() {
-        allConfig = Configuration.from(FileUtil.readString("./plugin.json", "utf-8"));
+    public static void bind() throws IOException {
+        InputStream is = LoadUtil.class.getResourceAsStream("/plugin.json");
+        BufferedReader bf = new BufferedReader(new InputStreamReader(is));
+        String line = null;
+        StringBuilder plugin = new StringBuilder();
+        while ((line = bf.readLine()) != null) {
+            plugin.append(line);
+        }
+        allConfig = Configuration.from(plugin.toString());
     }
 
     private static Map<String, JarLoader> jarLoaderCenter = new HashMap<String, JarLoader>();
@@ -47,6 +57,8 @@ public class LoadUtil {
         JarLoader jarLoader = jarLoaderCenter.get(generatePluginKey(pluginType, pluginName));
         if (null == jarLoader) {
             String pluginPath = pluginConf.getString("path");
+            log.info(System.getProperty("user.dir"));
+            log.info(pluginPath);
             if (StringUtils.isBlank(pluginPath)) {
                 throw SysException.newException(
                         CommonError.RUNTIME_ERROR,
@@ -87,7 +99,7 @@ public class LoadUtil {
             jobPlugin.setPluginConf(getPluginConf(pluginType, pluginName));
             return jobPlugin;
         } catch (Exception e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             throw SysException.newException(CommonError.RUNTIME_ERROR, e);
         }
     }

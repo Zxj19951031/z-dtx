@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.Set;
 
 public class Engine {
@@ -26,7 +27,7 @@ public class Engine {
     /**
      * 交换入口
      */
-    public void entry() {
+    public void entry() throws IOException {
         String jobId = allConfig.getString(CoreConstant.JOB_ID, "undefined");
         allConfig.set(CoreConstant.JOB_ID, jobId);
 
@@ -69,7 +70,7 @@ public class Engine {
         }
     }
 
-    public void start() {
+    public void start() throws IOException {
 
         ColumnCast.bind(allConfig);
 
@@ -84,7 +85,7 @@ public class Engine {
     public static void main(String[] args) {
 
         try {
-            String a = FileUtil.readString("/Users/zhuxj/IdeaProjects/citydo-dtx/allConfig.json", "utf-8");
+            String a = FileUtil.readString("/Users/zhuxj/IdeaProjects/citydo-dtx/b2a.json", "utf-8");
 
             Engine engine = new Engine(Configuration.from(a));
             engine.entry();

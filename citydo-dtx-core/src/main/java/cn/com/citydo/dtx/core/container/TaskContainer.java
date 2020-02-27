@@ -98,7 +98,13 @@ public class TaskContainer extends AbstractContainer {
     }
 
     public PluginStatus getStatus() {
-        return readerRunner.getStatus().getKey() > writerRunner.getStatus().getKey()
-                ? readerRunner.getStatus() : writerRunner.getStatus();
+        //如果读写都已不再运行则取较大值,否则较小值
+        if (readerRunner.getStatus().getKey() > PluginStatus.RUNNING.getKey()
+                && writerRunner.getStatus().getKey() > PluginStatus.RUNNING.getKey())
+            return readerRunner.getStatus().getKey() > writerRunner.getStatus().getKey()
+                    ? readerRunner.getStatus() : writerRunner.getStatus();
+        else
+            return readerRunner.getStatus().getKey() < writerRunner.getStatus().getKey()
+                    ? readerRunner.getStatus() : writerRunner.getStatus();
     }
 }

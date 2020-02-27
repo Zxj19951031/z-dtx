@@ -20,4 +20,5 @@ public class CoreConstant {
     public static final String TASK_ID = "task.id";
     public static final String JOB_CONTENT = "job.content";
     public static final String TUNNEL = "job.tunnel";
+    public static final String AUTO_TERMINATE="autoTerminate";
 }

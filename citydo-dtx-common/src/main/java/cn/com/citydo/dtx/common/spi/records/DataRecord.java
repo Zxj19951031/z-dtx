@@ -4,9 +4,12 @@ import cn.com.citydo.consts.exceptions.SysException;
 import cn.com.citydo.dtx.common.spi.columns.Column;
 import cn.com.citydo.dtx.common.spi.commons.ClassSize;
 import cn.com.citydo.dtx.common.spi.errors.ColumnError;
+import com.alibaba.fastjson.JSON;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 数据记录
@@ -96,4 +99,13 @@ public class DataRecord implements Record {
         return columns;
     }
 
+    @Override
+    public String toString() {
+        Map<String, Object> json = new HashMap<String, Object>();
+        json.put("size", this.getColumnNumber());
+        json.put("data", columns);
+        json.put("byteSize", byteSize);
+        json.put("memorySize", memorySize);
+        return JSON.toJSONString(json);
+    }
 }
