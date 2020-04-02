@@ -1,13 +1,13 @@
 package org.zipper.db.mapper;
 
-import org.zipper.db.pojo.dto.DBQueryParams;
-import org.zipper.db.pojo.entity.MySqlDB;
-import org.zipper.db.pojo.entity.OracleDB;
-import org.zipper.db.pojo.vo.DBVO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.zipper.db.pojo.dto.DBQueryParams;
+import org.zipper.db.pojo.entity.MySqlDB;
+import org.zipper.db.pojo.entity.OracleDB;
+import org.zipper.db.pojo.vo.DBVO;
 
 import java.util.List;
 
@@ -47,7 +47,7 @@ public interface DBMapper {
             "<if test=\"r.host!=null and r.host!=''\">",
             ",host = #{r.host}",
             "</if>",
-            "<if test=\"r.port!=null and r.port>0\">",
+            "<if test=\"r.port!=null and r.port &gt; 0\">",
             ",port = #{r.port}",
             "</if>",
             "<if test=\"r.user!=null and r.user!=''\">",
@@ -56,8 +56,8 @@ public interface DBMapper {
             "<if test=\"r.password!=null and r.password!=''\">",
             ",password = #{r.password}",
             "</if>",
-            "<,script>"})
-    int updateOneMysql(@Param("r") MySqlDB record);
+            "</script>"})
+    int updateOneMySql(@Param("r") MySqlDB record);
 
     @Update({"<script>",
             "update tb_db_oracle set update_time = #{r.updateTime} ",
@@ -68,7 +68,7 @@ public interface DBMapper {
             "<if test=\"r.host!=null and r.host!=''\">",
             ",host = #{r.host}",
             "</if>",
-            "<if test=\"r.port!=null and r.port>0\">",
+            "<if test=\"r.port!=null and r.port &gt; 0\">",
             ",port = #{r.port}",
             "</if>",
             "<if test=\"r.user!=null and r.user!=''\">",
@@ -80,6 +80,26 @@ public interface DBMapper {
             "<if test=\"r.connType!=null and r.connType!=''\">",
             ",conn_type = #{r.connType}",
             "</if>",
-            "<,script>"})
+            "</script>"})
     int updateOneOracle(@Param("r") OracleDB record);
+
+    @Update({"<script>",
+            "update tb_db_mysql set update_time = now(),status = 1 ",
+            "<where> id in",
+            " <foreach item=\"item\" collection=\"list\" separator=\",\" open=\"(\" close=\")\">",
+            " #{item}",
+            " </foreach>",
+            "</where>",
+            "</script>"})
+    int deleteBatchMySql(@Param("list") List<Integer> ids);
+
+    @Update({"<script>",
+            "update tb_db_oracle set update_time = now(),status = 1 ",
+            "<where> id in",
+            " <foreach item=\"item\" collection=\"list\" separator=\",\" open=\"(\" close=\")\">",
+            " #{item}",
+            " </foreach>",
+            "</where>",
+            "</script>"})
+    int deleteBatchOracle(@Param("list") List<Integer> ids);
 }

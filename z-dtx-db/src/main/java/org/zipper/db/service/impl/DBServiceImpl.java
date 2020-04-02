@@ -1,11 +1,17 @@
 package org.zipper.db.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.zipper.common.enums.Status;
 import org.zipper.common.exceptions.SysException;
 import org.zipper.common.exceptions.errors.TypeError;
 import org.zipper.db.factory.DBFactory;
 import org.zipper.db.mapper.DBMapper;
 import org.zipper.db.pojo.dto.DBDTO;
+import org.zipper.db.pojo.dto.DBDeleteParams;
 import org.zipper.db.pojo.dto.DBQueryParams;
 import org.zipper.db.pojo.entity.BaseEntity;
 import org.zipper.db.pojo.entity.DataBase;
@@ -13,10 +19,6 @@ import org.zipper.db.pojo.entity.MySqlDB;
 import org.zipper.db.pojo.entity.OracleDB;
 import org.zipper.db.pojo.vo.DBVO;
 import org.zipper.db.service.DBService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.List;
@@ -27,6 +29,7 @@ import java.util.List;
  * @since 2020/4/2
  */
 @Service
+@Transactional
 public class DBServiceImpl implements DBService {
 
     @Autowired
@@ -71,24 +74,42 @@ public class DBServiceImpl implements DBService {
     }
 
     @Override
-    public int updateOne(DBDTO db) {
+    public boolean updateOne(DBDTO db) {
         DataBase dataBase = dbFactory.createDB(db);
         BaseEntity record = (BaseEntity) dataBase;
         record.setId(db.getId());
         record.setUpdateTime(Calendar.getInstance().getTime());
 
-        int id;
+        int cnt;
         switch (db.getDbType()) {
             case MySql:
-                id = dbMapper.updateOneMysql((MySqlDB) record);
+                cnt = dbMapper.updateOneMySql((MySqlDB) record);
                 break;
             case Oracle:
-                id = dbMapper.updateOneOracle((OracleDB) record);
+                cnt = dbMapper.updateOneOracle((OracleDB) record);
                 break;
             default:
                 throw SysException.newException(TypeError.UNKNOWN_TYPE,
                         String.format("不支持的数据源类型:[%s]", db.getDbType()));
         }
-        return id;
+        return cnt > 0;
+    }
+
+    @Override
+    public boolean deleteBatch(DBDeleteParams params) {
+
+        int cnt;
+        switch (params.getType()) {
+            case MySql:
+                cnt = dbMapper.deleteBatchMySql(params.getIds());
+                break;
+            case Oracle:
+                cnt = dbMapper.deleteBatchOracle(params.getIds());
+                break;
+            default:
+                throw SysException.newException(TypeError.UNKNOWN_TYPE,
+                        String.format("不支持的数据源类型:[%s]", params.getType()));
+        }
+        return cnt>0;
     }
 }

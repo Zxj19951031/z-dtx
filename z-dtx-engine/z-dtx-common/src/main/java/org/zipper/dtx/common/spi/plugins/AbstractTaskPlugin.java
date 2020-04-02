@@ -1,6 +1,5 @@
 package org.zipper.dtx.common.spi.plugins;
 
-import org.zipper.common.json.Configuration;
 import org.zipper.dtx.common.spi.collectors.TaskPluginCollector;
 
 public abstract class AbstractTaskPlugin extends AbstractPlugin {

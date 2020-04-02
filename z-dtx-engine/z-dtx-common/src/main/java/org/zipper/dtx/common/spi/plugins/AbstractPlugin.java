@@ -1,7 +1,6 @@
 package org.zipper.dtx.common.spi.plugins;
 
 import org.zipper.common.json.Configuration;
-import org.zipper.common.json.Configuration;
 import lombok.Data;
 
 @Data

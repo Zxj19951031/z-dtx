@@ -1,7 +1,7 @@
 package org.zipper.db.pojo.dto;
 
-import org.zipper.db.enums.DBType;
 import lombok.Data;
+import org.zipper.db.enums.DBType;
 
 import java.util.List;
 
@@ -14,4 +14,7 @@ public class DBDeleteParams {
     private DBType type;
     private List<Integer> ids;
 
+    public void setType(int val) {
+        this.type = DBType.get(val);
+    }
 }

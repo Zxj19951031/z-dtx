@@ -4,8 +4,6 @@ import org.zipper.common.json.Configuration;
 import org.zipper.dtx.common.spi.columns.ColumnCast;
 import org.zipper.dtx.common.spi.commons.CoreConstant;
 import org.zipper.dtx.common.spi.commons.VMInfo;
-import org.zipper.dtx.common.spi.records.DataRecord;
-import org.zipper.dtx.common.spi.records.Record;
 import org.zipper.dtx.core.container.AbstractContainer;
 import org.zipper.dtx.core.container.JobContainer;
 import org.zipper.dtx.core.utils.LoadUtil;
