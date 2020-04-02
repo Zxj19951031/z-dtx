@@ -1,4 +1,4 @@
-package cn.com.citydo.common.enums;
+package org.zipper.common.enums;
 
 public enum Status implements IEnum<Integer, String> {
 

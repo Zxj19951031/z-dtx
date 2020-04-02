@@ -1,4 +1,4 @@
-package cn.com.citydo.common.exceptions.errors;
+package org.zipper.common.exceptions.errors;
 
 /**
  * 常见接口服务异常

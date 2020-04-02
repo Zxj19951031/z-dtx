@@ -1,0 +1,15 @@
+{
+  "name": "mysqlwriter",
+  "parameter": {
+    "jdbcUrl": "jdbc:mysql://localhost:3306/z_sjzl?useUnicode=true&characterEncoding=utf-8",
+    "username": "root",
+    "password": "123456",
+    "table": "tb_source_info_odps_copy",
+    "method": "replace",
+    "columns": [
+      "cus_name",
+      "access_id",
+      "id"
+    ]
+  }
+}

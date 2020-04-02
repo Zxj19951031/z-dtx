@@ -11,7 +11,7 @@
     <fileSets>
 
         <fileSet>
-            <directory>citydo-dtx-core/target/dtx/</directory>
+            <directory>z-dtx-core/target/dtx/</directory>
             <includes>
                 <include>**/*.*</include>
             </includes>

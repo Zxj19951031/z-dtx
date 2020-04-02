@@ -1,8 +1,8 @@
-package cn.com.citydo.common.exceptions;
+package org.zipper.common.exceptions;
 
 
-import cn.com.citydo.common.exceptions.errors.IErrorCode;
-import cn.com.citydo.common.exceptions.errors.SystemError;
+import org.zipper.common.exceptions.errors.IErrorCode;
+import org.zipper.common.exceptions.errors.SystemError;
 
 /**
  * @author zhuxj

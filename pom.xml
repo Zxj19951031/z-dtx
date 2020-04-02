@@ -10,16 +10,16 @@
         <version>2.0.4.RELEASE</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>cn.com.citydo.dtx</groupId>
-    <artifactId>citydo-dtx</artifactId>
+    <groupId>org.zipper.dtx</groupId>
+    <artifactId>z-dtx</artifactId>
     <packaging>pom</packaging>
     <version>${revision}</version>
 
 
     <modules>
-        <module>citydo-dtx-db</module>
-        <module>citydo-dtx-engine</module>
-        <module>citydo-dtx-job</module>
+        <module>z-dtx-db</module>
+        <module>z-dtx-engine</module>
+        <module>z-dtx-job</module>
         <module>common</module>
     </modules>
 
@@ -27,7 +27,6 @@
         <revision>2.0.0</revision>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <citydo.starter.version>1.1.0</citydo.starter.version>
         <lombok.version>1.18.10</lombok.version>
         <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.2.3</logback.version>
@@ -66,25 +65,25 @@
             </dependency>
             <!--      交换引擎——交换模块      -->
             <dependency>
-                <groupId>cn.com.citydo.dtx</groupId>
-                <artifactId>citydo-dtx-common</artifactId>
+                <groupId>org.zipper.dtx</groupId>
+                <artifactId>z-dtx-common</artifactId>
                 <version>${revision}</version>
             </dependency>
             <!--      交换引擎——关系型插件模块      -->
             <dependency>
-                <groupId>cn.com.citydo.dtx</groupId>
-                <artifactId>citydo-dtx-rdbms-plugin</artifactId>
+                <groupId>org.zipper.dtx</groupId>
+                <artifactId>z-dtx-rdbms-plugin</artifactId>
                 <version>${revision}</version>
             </dependency>
             <!--      交换引擎——入口      -->
             <dependency>
-                <groupId>cn.com.citydo.dtx</groupId>
-                <artifactId>citydo-dtx-core</artifactId>
+                <groupId>org.zipper.dtx</groupId>
+                <artifactId>z-dtx-core</artifactId>
                 <version>${revision}</version>
             </dependency>
             <!--      交换引擎——基础包      -->
             <dependency>
-                <groupId>cn.com.citydo.dtx</groupId>
+                <groupId>org.zipper.dtx</groupId>
                 <artifactId>common</artifactId>
                 <version>${revision}</version>
             </dependency>

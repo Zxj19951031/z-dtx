@@ -1,7 +1,7 @@
-package cn.com.citydo.common.exceptions.errors;
+package org.zipper.common.exceptions.errors;
 
 
-import cn.com.citydo.common.enums.IEnum;
+import org.zipper.common.enums.IEnum;
 
 public interface IErrorCode extends IEnum<Integer, String> {
 

@@ -3,11 +3,11 @@
  * Created by zhuxj
  */
 
-package cn.com.citydo.common.json;
+package org.zipper.common.json;
 
-import cn.com.citydo.common.exceptions.SysException;
-import cn.com.citydo.common.exceptions.errors.IErrorCode;
-import cn.com.citydo.common.exceptions.errors.JsonError;
+import org.zipper.common.exceptions.SysException;
+import org.zipper.common.exceptions.errors.IErrorCode;
+import org.zipper.common.exceptions.errors.JsonError;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.apache.commons.lang3.CharUtils;

@@ -1,7 +1,7 @@
-package cn.com.citydo.common.response;
+package org.zipper.common.response;
 
-import cn.com.citydo.common.exceptions.SysException;
-import cn.com.citydo.common.exceptions.errors.IErrorCode;
+import org.zipper.common.exceptions.SysException;
+import org.zipper.common.exceptions.errors.IErrorCode;
 import com.alibaba.fastjson.JSON;
 
 /**

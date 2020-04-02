@@ -1,0 +1,34 @@
+{
+  "reader": {
+    "mysqlreader": {
+      "path": "plugin/reader/mysqlreader",
+      "class": "org.zipper.plugin.mysqlreader.MysqlReader"
+    },
+    "drdsreader": {
+      "path": "plugin/reader/drdsreader",
+      "class": "org.zipper.plugin.drdsreader.DrdsReader"
+    },
+    "rocketmqreader": {
+      "path": "plugin/reader/rocketmqreader",
+      "class": "org.zipper.plugin.rocketmqreader.RocketMqReader"
+    }
+  },
+  "writer": {
+    "mysqlwriter": {
+      "path": "plugin/writer/mysqlwriter",
+      "class": "org.zipper.plugin.mysqlwriter.MysqlWriter"
+    },
+    "streamwriter": {
+      "path": "plugin/writer/streamwriter",
+      "class": "org.zipper.plugin.streamwriter.StreamWriter"
+    },
+    "drdswriter": {
+      "path": "plugin/writer/drdswriter",
+      "class": "org.zipper.plugin.drdswriter.DrdsWriter"
+    },
+    "rocketmqwriter": {
+      "path": "plugin/writer/rocketmqwriter",
+      "class": "org.zipper.plugin.rocketmqwriter.RocketMqWriter"
+    }
+  }
+}

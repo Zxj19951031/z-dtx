@@ -1,0 +1,57 @@
+{
+  "job": {
+    "id": "1",
+    "content": {
+      "reader": {
+        "name": "drdsreader",
+        "parameter": {
+          "jdbcUrl": "jdbc:mysql://172.21.245.56:3306/enterprise_filling?useUnicode=true&characterEncoding=utf-8",
+          "username": "enterprise_filling",
+          "password": "Qyfgfgqrxt123",
+          "table": "adm_healthcode_user_answer_sheet",
+          "where": "id=186",
+          "columns": [
+            "id",
+            "clockin_id",
+            "question_id",
+            "answer_id",
+            "answer_name",
+            "gmt_create",
+            "gmt_modified",
+            "is_deleted"
+          ]
+        }
+      },
+      "writer": {
+        "name": "rocketmqwriter",
+        "parameter": {
+          "groupId": "PID_jkm",
+          "accessKey": "7x9K2T4kUvZP6Cfz",
+          "secretKey": "uyTbDZjPGFn1Hq1asMCKaO9RJ6lEky",
+          "nameAddr": "172.21.248.125:8080",
+          "topic": "jkm",
+          "tags": "*",
+          "columns": [
+            "id",
+            "clockin_id",
+            "question_id",
+            "answer_id",
+            "answer_name",
+            "gmt_create",
+            "gmt_modified",
+            "is_deleted"
+          ]
+        }
+      }
+    },
+    "setting": {
+      "speed": {
+        "channel": 1
+      }
+    }
+  },
+  "tunnel": {
+    "bufferSize": 1000,
+    "byteCapacity": 8388608
+  }
+}
