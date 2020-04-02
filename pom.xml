@@ -2,56 +2,58 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.4.RELEASE</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>cn.com.citydo.dtx</groupId>
     <artifactId>citydo-dtx</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0</version>
+    <version>${revision}</version>
+
+
     <modules>
-        <module>citydo-dtx-core</module>
-        <module>citydo-dtx-common</module>
-        <module>mysqlreader</module>
-        <module>mysqlwriter</module>
-        <module>streamwriter</module>
-        <module>rocketmqreader</module>
-        <module>drdswriter</module>
-        <module>rocketmqwriter</module>
-        <module>drdsreader</module>
+        <module>citydo-dtx-db</module>
+        <module>citydo-dtx-engine</module>
+        <module>citydo-dtx-job</module>
+        <module>common</module>
     </modules>
+
     <properties>
+        <revision>2.0.0</revision>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <starter.utils.version>0.0.1</starter.utils.version>
-        <starter.const.version>0.0.1</starter.const.version>
+        <citydo.starter.version>1.1.0</citydo.starter.version>
         <lombok.version>1.18.10</lombok.version>
         <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.2.3</logback.version>
-        <dtx.version>1.0.0</dtx.version>
+        <fastjson.version>1.2.59</fastjson.version>
+        <hutool.version>4.6.8</hutool.version>
+        <mybatis.version>2.0.3</mybatis.version>
+        <druid.version>1.1.18</druid.version>
+        <pagehelper.version>1.2.5</pagehelper.version>
+
     </properties>
+
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>cn.com.citydo.starter</groupId>
-                <artifactId>citydo-starter-utils</artifactId>
-                <version>${starter.utils.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.com.citydo.starter</groupId>
-                <artifactId>citydo-starter-const</artifactId>
-                <version>${starter.const.version}</version>
-            </dependency>
+            <!--      lombok      -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
             </dependency>
+            <!--      日志包      -->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.version}</version>
                 <scope>compile</scope>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-core</artifactId>
@@ -62,20 +64,59 @@
                 <artifactId>logback-classic</artifactId>
                 <version>${logback.version}</version>
             </dependency>
+            <!--      交换引擎——交换模块      -->
             <dependency>
                 <groupId>cn.com.citydo.dtx</groupId>
                 <artifactId>citydo-dtx-common</artifactId>
-                <version>${dtx.version}</version>
+                <version>${revision}</version>
             </dependency>
+            <!--      交换引擎——关系型插件模块      -->
             <dependency>
                 <groupId>cn.com.citydo.dtx</groupId>
                 <artifactId>citydo-dtx-rdbms-plugin</artifactId>
-                <version>${dtx.version}</version>
+                <version>${revision}</version>
             </dependency>
+            <!--      交换引擎——入口      -->
             <dependency>
                 <groupId>cn.com.citydo.dtx</groupId>
                 <artifactId>citydo-dtx-core</artifactId>
-                <version>${dtx.version}</version>
+                <version>${revision}</version>
+            </dependency>
+            <!--      交换引擎——基础包      -->
+            <dependency>
+                <groupId>cn.com.citydo.dtx</groupId>
+                <artifactId>common</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <!--      fastjson      -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <!--      hutool      -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <!--      mybatis      -->
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            <!--      druid      -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <!--      pagehelper      -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
