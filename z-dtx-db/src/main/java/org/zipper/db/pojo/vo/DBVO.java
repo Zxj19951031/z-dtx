@@ -1,8 +1,8 @@
 package org.zipper.db.pojo.vo;
 
-import org.zipper.db.enums.DBType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.zipper.enums.DBType;
 
 import java.util.Date;
 

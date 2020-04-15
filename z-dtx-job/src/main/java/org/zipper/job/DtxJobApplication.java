@@ -1,4 +1,4 @@
-package org.zipper.db;
+package org.zipper.job;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -6,17 +6,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-/**
- * @author zhuxj
- * @since 2020/4/1
- */
 @SpringBootApplication
-@MapperScan(basePackages = "org.zipper.db.mapper")
-@EnableEurekaClient
+@MapperScan(basePackages = "org.zipper.job.mapper")
 @EnableFeignClients
-public class DtxDBApplication {
-
+@EnableEurekaClient
+public class DtxJobApplication {
     public static void main(String[] args) {
-        SpringApplication.run(DtxDBApplication.class, args);
+        SpringApplication.run(DtxJobApplication.class, args);
     }
 }

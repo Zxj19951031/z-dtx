@@ -2,11 +2,14 @@ package org.zipper.db.factory;
 
 import org.zipper.common.exceptions.SysException;
 import org.zipper.common.exceptions.errors.TypeError;
-import org.zipper.db.pojo.dto.DBDTO;
 import org.zipper.db.pojo.entity.DataBase;
 import org.zipper.db.pojo.entity.MySqlDB;
 import org.zipper.db.pojo.entity.OracleDB;
 import org.springframework.stereotype.Component;
+import org.zipper.dto.DBDTO;
+
+import static org.zipper.enums.DBType.MySql;
+import static org.zipper.enums.DBType.Oracle;
 
 @Component
 public class DBFactory implements AbstractFactory {

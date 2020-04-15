@@ -11,6 +11,7 @@
     <packaging>pom</packaging>
 
     <artifactId>z-dtx-engine</artifactId>
+    <name>Z-DTX：核心交换</name>
 
     <modules>
         <module>z-dtx-core</module>

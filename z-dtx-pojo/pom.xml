@@ -3,14 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>z-dtx-engine</artifactId>
+        <artifactId>z-dtx</artifactId>
         <groupId>org.zipper.dtx</groupId>
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>z-dtx-common</artifactId>
-    <name>Z-DTX：交换框架</name>
+    <artifactId>z-dtx-pojo</artifactId>
+    <name>Z-DTX：POJO</name>
+
 
     <dependencies>
         <dependency>
@@ -18,25 +19,8 @@
             <artifactId>lombok</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.zipper.dtx</groupId>
             <artifactId>common</artifactId>
         </dependency>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-        </dependency>
     </dependencies>
-
 </project>

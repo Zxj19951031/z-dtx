@@ -1,10 +1,10 @@
 package org.zipper.db.service;
 
-import org.zipper.db.pojo.dto.DBDTO;
 import org.zipper.db.pojo.dto.DBDeleteParams;
 import org.zipper.db.pojo.dto.DBQueryParams;
 import org.zipper.db.pojo.vo.DBVO;
 import com.github.pagehelper.PageInfo;
+import org.zipper.dto.DBDTO;
 
 import java.util.List;
 

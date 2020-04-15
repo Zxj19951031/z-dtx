@@ -1,6 +1,8 @@
 server:
   port: 8081
 spring:
+  application:
+    name: z-dtx-db-service
   datasource:
     url: jdbc:mysql://localhost:3306/dtx-db?useSSL=false
     username: root
@@ -14,3 +16,12 @@ logging:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://127.0.0.1:8888/eureka/

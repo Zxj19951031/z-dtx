@@ -1,7 +1,7 @@
 package org.zipper.db.pojo.dto;
 
 import lombok.Data;
-import org.zipper.db.enums.DBType;
+import org.zipper.enums.DBType;
 
 import java.util.List;
 

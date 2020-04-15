@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>common</artifactId>
-
+<name>Z-DTX：基础组件</name>
 
     <dependencies>
         <dependency>

@@ -10,7 +10,6 @@ import org.zipper.common.exceptions.SysException;
 import org.zipper.common.exceptions.errors.TypeError;
 import org.zipper.db.factory.DBFactory;
 import org.zipper.db.mapper.DBMapper;
-import org.zipper.db.pojo.dto.DBDTO;
 import org.zipper.db.pojo.dto.DBDeleteParams;
 import org.zipper.db.pojo.dto.DBQueryParams;
 import org.zipper.db.pojo.entity.BaseEntity;
@@ -19,6 +18,7 @@ import org.zipper.db.pojo.entity.MySqlDB;
 import org.zipper.db.pojo.entity.OracleDB;
 import org.zipper.db.pojo.vo.DBVO;
 import org.zipper.db.service.DBService;
+import org.zipper.dto.DBDTO;
 
 import java.util.Calendar;
 import java.util.List;

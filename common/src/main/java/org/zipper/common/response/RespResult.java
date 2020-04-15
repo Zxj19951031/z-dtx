@@ -1,62 +1,62 @@
 package org.zipper.common.response;
 
+import com.alibaba.fastjson.JSON;
 import org.zipper.common.exceptions.SysException;
 import org.zipper.common.exceptions.errors.IErrorCode;
-import com.alibaba.fastjson.JSON;
 
 /**
  * 响应结果
  *
  * @author zhuxj
  */
-public class RespResult {
+public class RespResult<T> {
 
     //状态码 非异常 200
     private Integer code;
     //状态值 非异常 success
     private String message;
     //返回值
-    private Object data;
+    private T data;
 
     private RespResult() {
     }
 
-    private RespResult(Object data) {
+    private RespResult(T data) {
         this.code = 200;
         this.message = "success";
         this.data = data;
     }
 
-    private RespResult(IErrorCode error, Object data) {
+    private RespResult(IErrorCode error, T data) {
         this.code = error.getCode();
         this.message = error.getDescription();
         this.data = data;
     }
 
-    private RespResult(SysException e, Object data) {
+    private RespResult(SysException e, T data) {
         this.code = e.getError().getCode();
         this.message = e.getError().getDescription();
         this.data = data;
     }
 
-    public static RespResult success(Object data) {
-        return new RespResult(data);
+    public static <T> RespResult<T> success(T data) {
+        return new RespResult<>(data);
     }
 
-    public static RespResult error(SysException e) {
+    public static RespResult<String> error(SysException e) {
         return error(e, e.getMsg());
     }
 
-    public static RespResult error(SysException e, Object data) {
-        return new RespResult(e, data);
+    public static <T> RespResult<T> error(SysException e, T data) {
+        return new RespResult<>(e, data);
     }
 
-    public static RespResult error(IErrorCode error) {
+    public static <T> RespResult<T> error(IErrorCode error) {
         return error(error, null);
     }
 
-    public static RespResult error(IErrorCode error, Object data) {
-        return new RespResult(error, data);
+    public static <T> RespResult<T> error(IErrorCode error, T data) {
+        return new RespResult<>(error, data);
     }
 
     @Override
@@ -80,11 +80,11 @@ public class RespResult {
         this.message = message;
     }
 
-    public Object getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(T data) {
         this.data = data;
     }
 }

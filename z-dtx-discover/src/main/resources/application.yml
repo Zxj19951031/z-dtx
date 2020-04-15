@@ -1,0 +1,11 @@
+server:
+  port: 8888
+
+eureka:
+  client:
+    register-with-eureka: false #不实用eureka服务进行注册
+    fetch-registry: false #不本地缓存注册表信息
+    service-url:
+      defaultZone: http://127.0.0.1:8888/eureka/
+  server:
+    wait-time-in-ms-when-sync-empty: 5 #在服务器接收请求前等待的时间

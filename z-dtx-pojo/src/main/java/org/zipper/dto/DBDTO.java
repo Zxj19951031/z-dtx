@@ -1,7 +1,7 @@
-package org.zipper.db.pojo.dto;
+package org.zipper.dto;
 
-import org.zipper.db.enums.DBType;
 import lombok.Data;
+import org.zipper.enums.DBType;
 
 /**
  * @author zhuxj
@@ -17,6 +17,10 @@ public class DBDTO {
     private String user;
     private String password;
     private String connType;
+
+    public void setDbType(String key) {
+        this.dbType = DBType.valueOf(key);
+    }
 
     public void setDbType(int val) {
         this.dbType = DBType.get(val);
