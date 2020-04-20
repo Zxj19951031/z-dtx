@@ -2,6 +2,7 @@ package org.zipper.db.service;
 
 import org.zipper.db.pojo.dto.DBDeleteParams;
 import org.zipper.db.pojo.dto.DBQueryParams;
+import org.zipper.db.pojo.entity.DataBase;
 import org.zipper.db.pojo.vo.DBVO;
 import com.github.pagehelper.PageInfo;
 import org.zipper.dto.DBDTO;
@@ -18,4 +19,6 @@ public interface DBService {
     boolean updateOne(DBDTO db);
 
     boolean deleteBatch(DBDeleteParams params);
+
+    DataBase queryOne(Integer id, Integer dbType);
 }

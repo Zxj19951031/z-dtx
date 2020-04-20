@@ -35,12 +35,12 @@ public interface DBMapper {
             "t.db_name = #{p.dbName}",
             "</if>",
             "</where>",
+            "order by create_time desc",
             "</script>"})
     List<DBVO> selectUnionAll(@Param("p") DBQueryParams params);
 
     @Update({"<script>",
             "update tb_db_mysql set update_time = #{r.updateTime} ",
-            "where id = #{r.id} ",
             "<if test=\"r.dbName!=null and r.dbName!=''\">",
             ",db_name = #{r.dbName}",
             "</if>",
@@ -56,6 +56,7 @@ public interface DBMapper {
             "<if test=\"r.password!=null and r.password!=''\">",
             ",password = #{r.password}",
             "</if>",
+            "where id = #{r.id} ",
             "</script>"})
     int updateOneMySql(@Param("r") MySqlDB record);
 
@@ -102,4 +103,12 @@ public interface DBMapper {
             "</where>",
             "</script>"})
     int deleteBatchOracle(@Param("list") List<Integer> ids);
+
+    @Select("select id,db_name,host,port,user,password,create_time,update_time from " +
+            "tb_db_mysql where id = #{id} and status = 0")
+    MySqlDB selectOneMySql(@Param("id") Integer id);
+
+    @Select("select id,db_name,host,port,user,password,conn_type,create_time,update_time from " +
+            "tb_db_oracle where id = #{id} and status = 0")
+    OracleDB selectOneOracle(@Param("id") Integer id);
 }

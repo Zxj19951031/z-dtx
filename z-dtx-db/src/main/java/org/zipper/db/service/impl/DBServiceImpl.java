@@ -11,6 +11,7 @@ import org.zipper.common.exceptions.errors.TypeError;
 import org.zipper.db.factory.DBFactory;
 import org.zipper.db.mapper.DBMapper;
 import org.zipper.db.pojo.dto.DBDeleteParams;
+import org.zipper.db.pojo.dto.DBDeleteRow;
 import org.zipper.db.pojo.dto.DBQueryParams;
 import org.zipper.db.pojo.entity.BaseEntity;
 import org.zipper.db.pojo.entity.DataBase;
@@ -19,9 +20,14 @@ import org.zipper.db.pojo.entity.OracleDB;
 import org.zipper.db.pojo.vo.DBVO;
 import org.zipper.db.service.DBService;
 import org.zipper.dto.DBDTO;
+import org.zipper.enums.DBType;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 
 /**
@@ -98,18 +104,49 @@ public class DBServiceImpl implements DBService {
     @Override
     public boolean deleteBatch(DBDeleteParams params) {
 
-        int cnt;
-        switch (params.getType()) {
+        AtomicInteger cnt = new AtomicInteger();
+        Map<DBType, List<Integer>> tmp = params.getRows().stream().collect(Collectors.toMap(
+                DBDeleteRow::getType, row -> new ArrayList<Integer>() {{
+                    add(row.getId());
+                }},
+                (o, n) -> {
+                    o.addAll(n);
+                    return o;
+                }));
+
+        tmp.forEach((type, ids) -> {
+            switch (type) {
+                case MySql:
+                    cnt.addAndGet(dbMapper.deleteBatchMySql(ids));
+                    break;
+                case Oracle:
+                    cnt.addAndGet(dbMapper.deleteBatchOracle(ids));
+                    break;
+                default:
+                    throw SysException.newException(TypeError.UNKNOWN_TYPE,
+                            String.format("不支持的数据源类型:[%s]", type));
+            }
+        });
+
+
+        return cnt.get() > 0;
+    }
+
+    @Override
+    public DataBase queryOne(Integer id, Integer dbType) {
+
+        DataBase result = null;
+        switch (DBType.get(dbType)) {
             case MySql:
-                cnt = dbMapper.deleteBatchMySql(params.getIds());
+                result = dbMapper.selectOneMySql(id);
                 break;
             case Oracle:
-                cnt = dbMapper.deleteBatchOracle(params.getIds());
+                result = dbMapper.selectOneOracle(id);
                 break;
             default:
                 throw SysException.newException(TypeError.UNKNOWN_TYPE,
-                        String.format("不支持的数据源类型:[%s]", params.getType()));
+                        String.format("不支持的数据源类型:[%s]", DBType.get(dbType)));
         }
-        return cnt>0;
+        return result;
     }
 }

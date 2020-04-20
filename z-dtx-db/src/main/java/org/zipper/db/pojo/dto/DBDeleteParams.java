@@ -11,10 +11,7 @@ import java.util.List;
  */
 @Data
 public class DBDeleteParams {
-    private DBType type;
-    private List<Integer> ids;
+    private List<DBDeleteRow> rows;
 
-    public void setType(int val) {
-        this.type = DBType.get(val);
-    }
 }
+

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.zipper.common.response.RespResult;
 import org.zipper.db.pojo.dto.DBDeleteParams;
 import org.zipper.db.pojo.dto.DBQueryParams;
+import org.zipper.db.pojo.entity.DataBase;
 import org.zipper.db.pojo.vo.DBVO;
 import org.zipper.db.service.DBService;
 import org.zipper.dto.DBDTO;
@@ -32,6 +33,14 @@ public class DBController {
         DBQueryParams params = DBQueryParams.builder().dbName(dbName).dbType(dbType).build();
         PageInfo<DBVO> records = dbService.queryByParams(params, pageNum, pageSize);
         return RespResult.success(records);
+    }
+
+    @GetMapping(value = "find")
+    public RespResult<DataBase> findOne(@RequestParam Integer id, @RequestParam Integer dbType) {
+
+        DataBase db = dbService.queryOne(id, dbType);
+        return RespResult.success(db);
+
     }
 
     @PostMapping(value = "modify")
