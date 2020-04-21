@@ -1,14 +1,13 @@
 package org.zipper.common.exceptions.errors;
 
-public enum JsonError implements IErrorCode {
+public enum QuartzError implements IErrorCode {
 
 
-    JSON_PARES_ERROR
-            (50001, "从JSON串加载JSON对象异常，请检查JSON串格式"),
-    CONFIG_ERROR
-            (50002, "JSON配置异常");
+    CRON_ERROR
+            (80001, "调度表达式错误"),
+    ;
 
-    JsonError(Integer code, String description) {
+    QuartzError(Integer code, String description) {
         this.code = code;
         this.description = description;
     }

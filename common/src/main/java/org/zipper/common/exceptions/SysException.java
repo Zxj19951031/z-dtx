@@ -17,7 +17,7 @@ public class SysException extends RuntimeException {
     private SysException(IErrorCode error) {
         super(String.format("Code:[%s],Desc:[%s]", error.getCode(), error.getDescription()));
         this.error = error;
-        this.msg = null;
+        this.msg = this.getMessage();
     }
 
     private SysException(IErrorCode error, String msg) {

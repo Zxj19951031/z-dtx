@@ -13,15 +13,14 @@ public class DBVO {
     private Integer dbType;
     private String host;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
 
-    public String getDbTypeStr(){
+    public String getDbTypeStr() {
         return DBType.get(dbType).name();
     }
-
 
 
 }

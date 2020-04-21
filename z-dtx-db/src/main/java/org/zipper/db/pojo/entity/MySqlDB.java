@@ -2,7 +2,7 @@ package org.zipper.db.pojo.entity;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import org.zipper.common.pojo.BaseEntity;
 
 /**
  * @author zhuxj

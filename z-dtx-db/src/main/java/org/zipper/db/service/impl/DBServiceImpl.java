@@ -13,7 +13,7 @@ import org.zipper.db.mapper.DBMapper;
 import org.zipper.db.pojo.dto.DBDeleteParams;
 import org.zipper.db.pojo.dto.DBDeleteRow;
 import org.zipper.db.pojo.dto.DBQueryParams;
-import org.zipper.db.pojo.entity.BaseEntity;
+import org.zipper.common.pojo.BaseEntity;
 import org.zipper.db.pojo.entity.DataBase;
 import org.zipper.db.pojo.entity.MySqlDB;
 import org.zipper.db.pojo.entity.OracleDB;
