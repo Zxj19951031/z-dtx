@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.zipper.common.enums.Status;
 import org.zipper.common.exceptions.SysException;
 import org.zipper.common.exceptions.errors.QuartzError;
-import org.zipper.common.json.Configuration;
 import org.zipper.rule.mapper.RuleMapper;
 import org.zipper.rule.pojo.dto.RuleDTO;
 import org.zipper.rule.pojo.dto.RuleQueryParams;
