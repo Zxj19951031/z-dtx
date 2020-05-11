@@ -6,6 +6,7 @@
         <artifactId>z-dtx-engine</artifactId>
         <groupId>org.zipper.dtx</groupId>
         <version>${revision}</version>
+        <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
