@@ -9,8 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-
-    <artifactId>z-dtx-rule</artifactId>
+    <artifactId>z-dtx-transport</artifactId>
 
 
     <dependencyManagement>
@@ -56,12 +55,11 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
-
+        <!--    common    -->
         <dependency>
             <groupId>org.zipper.dtx</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>z-dtx-common</artifactId>
         </dependency>
-
         <!--    mysql    -->
         <dependency>
             <groupId>mysql</groupId>
@@ -97,21 +95,18 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
+            <version>${logback.version}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-        </dependency>
-        <!--    Quartz    -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-quartz</artifactId>
+            <version>${logback.version}</version>
         </dependency>
     </dependencies>
-
 </project>

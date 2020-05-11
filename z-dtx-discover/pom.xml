@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>z-dtx-discover</artifactId>
-    <name>Z-DTX：服务发现</name>
+
 
     <dependencyManagement>
         <dependencies>

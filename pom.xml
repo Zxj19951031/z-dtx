@@ -15,15 +15,13 @@
     <packaging>pom</packaging>
     <version>${revision}</version>
 
-    <name>Z-DTX：DTX</name>
+
 
     <modules>
-        <module>z-dtx-db</module>
-        <module>z-dtx-engine</module>
-        <module>z-dtx-job</module>
         <module>common</module>
+        <module>z-dtx-transport</module>
+        <module>z-dtx-engine</module>
         <module>z-dtx-discover</module>
-        <module>z-dtx-pojo</module>
         <module>z-dtx-rule</module>
     </modules>
 
@@ -89,12 +87,6 @@
             <dependency>
                 <groupId>org.zipper.dtx</groupId>
                 <artifactId>common</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <!--      交换服务pojo包      -->
-            <dependency>
-                <groupId>org.zipper.dtx</groupId>
-                <artifactId>z-dtx-pojo</artifactId>
                 <version>${revision}</version>
             </dependency>
             <!--      fastjson      -->

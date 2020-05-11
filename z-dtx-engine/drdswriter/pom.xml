@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>drdswriter</artifactId>
-    <name>Z-DTX：DRDS 写入插件</name>
+
 
     <dependencies>
         <dependency>
