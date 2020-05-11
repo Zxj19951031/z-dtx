@@ -1,6 +1,6 @@
 package org.zipper.transport.controller;
 
-import org.zipper.transport.DtxDBApplication;
+import org.zipper.transport.DtxTransportApplication;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = DtxDBApplication.class)
+@SpringBootTest(classes = DtxTransportApplication.class)
 public class DBControllerTest {
 
     @Autowired

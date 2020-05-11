@@ -16,14 +16,14 @@ import org.springframework.web.filter.CorsFilter;
  * @since 2020/4/1
  */
 @SpringBootApplication
-@MapperScan(basePackages = "org.zipper.db.mapper")
+@MapperScan(basePackages = "org.zipper.transport.mapper")
 @EnableEurekaClient
 @EnableFeignClients
 @Configuration
-public class DtxDBApplication {
+public class DtxTransportApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DtxDBApplication.class, args);
+        SpringApplication.run(DtxTransportApplication.class, args);
     }
 
 

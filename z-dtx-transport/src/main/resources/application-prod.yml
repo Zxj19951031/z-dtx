@@ -1,0 +1,18 @@
+server:
+  port: 8088
+spring:
+  application:
+    name: z-dtx-transport-service
+  datasource:
+    url: jdbc:mysql://47.114.112.139:3306/dtx-transport?useSSL=false&characterEncoding=utf8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://47.114.112.139:8888/eureka/
