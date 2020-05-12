@@ -15,7 +15,10 @@ public enum DBError implements IErrorCode {
             (40004, "登录失败"),
     RECORD_NOT_EXIST
             (40005, "记录不存在"),
-    ;
+    CLOSE_ERROR
+            (40006, "关闭连接失败"),
+    QUERY_ERROR
+            (40007, "查询失败");
 
     private int code;
     private String description;

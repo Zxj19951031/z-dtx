@@ -1,6 +1,9 @@
 package org.zipper.transport.service;
 
+import org.zipper.transport.enums.DBInfo;
+import org.zipper.transport.enums.DBType;
 import org.zipper.transport.pojo.dto.DBDeleteParams;
+import org.zipper.transport.pojo.dto.DBInfoParams;
 import org.zipper.transport.pojo.dto.DBQueryParams;
 import org.zipper.transport.pojo.entity.DataBase;
 import org.zipper.transport.pojo.vo.DBVO;
@@ -21,4 +24,8 @@ public interface DBService {
     boolean deleteBatch(DBDeleteParams params);
 
     DataBase queryOne(Integer id, Integer dbType);
+
+    boolean checkConnection(DBDTO db);
+
+    List<String> getInfo(DataBase dataBase, DBType dbType, DBInfo dbInfo, DBInfoParams params);
 }

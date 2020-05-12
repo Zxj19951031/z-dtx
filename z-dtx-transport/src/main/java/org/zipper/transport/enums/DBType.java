@@ -10,21 +10,25 @@ import java.lang.reflect.Type;
 
 
 public enum DBType implements JSONSerializable {
-    MySql(1), Oracle(2);
-    private int type;
+    MySql(1, "com.mysql.jdbc.Driver"),
+    Oracle(2, "oracle.jdbc.driver.OracleDriver");
+    public int type;
+    public String className;
 
-    DBType(int type) {
+    DBType(int type, String className) {
         this.type = type;
+        this.className = className;
     }
 
-    public static DBType get(int val) {
-        for (DBType value : DBType.values()) {
-            if (value.type == val) {
-                return value;
+    public static DBType get(int type) {
+        for (DBType element : DBType.values()) {
+            if (element.type == type) {
+                return element;
             }
         }
 
-        throw SysException.newException(TypeError.UNKNOWN_TYPE, "DBType不支持的枚举值");
+        throw SysException.newException(TypeError.UNKNOWN_TYPE,
+                String.format("不支持的枚举值[%s]，请联系管理员", type));
     }
 
     @Override

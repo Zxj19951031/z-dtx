@@ -10,7 +10,9 @@ public enum SystemError implements IErrorCode {
     INDEX_ERROR
             (10002, "创建索引库异常"),
     IO_ERROR
-            (10003, "IO 异常");
+            (10003, "IO 异常"),
+    CLASS_NOT_FOUND
+            (10004, "无法找到目标类");
 
     private int code;
     private String description;

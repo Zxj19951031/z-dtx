@@ -2,7 +2,7 @@ server:
   port: 8088
 spring:
   profiles:
-    active: dev
+    active: zhuxj
   application:
     name: z-dtx-transport-service
 

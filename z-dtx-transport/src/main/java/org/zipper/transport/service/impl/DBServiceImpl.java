@@ -9,19 +9,22 @@ import org.zipper.common.enums.Status;
 import org.zipper.common.exceptions.SysException;
 import org.zipper.common.exceptions.errors.TypeError;
 import org.zipper.common.pojo.BaseEntity;
+import org.zipper.transport.enums.DBInfo;
+import org.zipper.transport.enums.DBType;
 import org.zipper.transport.factory.DBFactory;
 import org.zipper.transport.mapper.DBMapper;
-import org.zipper.transport.pojo.dto.DBDeleteParams;
-import org.zipper.transport.pojo.dto.DBDeleteRow;
-import org.zipper.transport.pojo.dto.DBQueryParams;
+import org.zipper.transport.pojo.dto.*;
 import org.zipper.transport.pojo.entity.DataBase;
 import org.zipper.transport.pojo.entity.MySqlDB;
 import org.zipper.transport.pojo.entity.OracleDB;
 import org.zipper.transport.pojo.vo.DBVO;
 import org.zipper.transport.service.DBService;
-import org.zipper.transport.pojo.dto.DBDTO;
-import org.zipper.transport.enums.DBType;
+import org.zipper.transport.utils.ColumnUtil;
+import org.zipper.transport.utils.ConnectionUtil;
+import org.zipper.transport.utils.CatalogUtil;
+import org.zipper.transport.utils.TableUtil;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -149,5 +152,38 @@ public class DBServiceImpl implements DBService {
                         String.format("不支持的数据源类型:[%s]", DBType.get(dbType)));
         }
         return result;
+    }
+
+    @Override
+    public boolean checkConnection(DBDTO db) {
+        switch (db.getDbType()) {
+            case MySql:
+                ConnectionUtil.checkMysql(db.getHost(), db.getPort(), db.getUser(), db.getPassword());
+                break;
+            case Oracle:
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public List<String> getInfo(DataBase dataBase, DBType dbType, DBInfo dbInfo, DBInfoParams params) {
+        switch (dbType) {
+            case MySql:
+                MySqlDB db = (MySqlDB) dataBase;
+                Connection conn = ConnectionUtil.getMysqlConnection(db.getHost(), db.getPort(), db.getUser(), db.getPassword());
+                switch (dbInfo) {
+                    case CATALOG:
+                        return CatalogUtil.getMySqlCatalogs(conn);
+                    case TABLE:
+                        return TableUtil.getMySqlTables(conn, params.getSchema());
+                    case COLUMN:
+                        return ColumnUtil.getMySqlColumns(conn, params.getSchema(), params.getTable());
+                }
+                break;
+            case Oracle:
+                break;
+        }
+        return new ArrayList<>();
     }
 }
