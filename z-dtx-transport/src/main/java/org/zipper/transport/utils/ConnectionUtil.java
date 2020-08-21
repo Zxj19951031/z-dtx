@@ -1,10 +1,9 @@
 package org.zipper.transport.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.zipper.common.exceptions.SysException;
-import org.zipper.common.exceptions.errors.DBError;
-import org.zipper.common.exceptions.errors.SystemError;
-import org.zipper.transport.enums.DBType;
+import org.zipper.helper.exception.HelperException;
+import org.zipper.helper.exception.ErrorCode;
+import org.zipper.transport.enums.DbType;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,7 +25,7 @@ public class ConnectionUtil {
                 conn.close();
             } catch (SQLException e) {
                 log.error("A error caused when close connection", e);
-                throw SysException.newException(DBError.CLOSE_ERROR, "关闭数据库连接失败，请及时联系管理员予以排查");
+                throw HelperException.newException(ErrorCode.CLOSE_ERROR, "关闭数据库连接失败，请及时联系管理员予以排查");
             }
         }
     }
@@ -39,7 +38,7 @@ public class ConnectionUtil {
      */
     public static Connection getMysqlConnection(String host, int port, String username, String pwd) {
         try {
-            Class.forName(DBType.MySql.className);
+            Class.forName(DbType.MySql.className);
             String url = String.format("jdbc:mysql://%s:%s", host, port);
             log.info(String.format("Checking connection for url[%s],username[%s],password[%s]", url, username, pwd));
 
@@ -47,11 +46,11 @@ public class ConnectionUtil {
             return DriverManager.getConnection(url, username, pwd);
         } catch (ClassNotFoundException e) {
             log.error("Class not found", e);
-            throw SysException.newException(SystemError.CLASS_NOT_FOUND,
-                    String.format("无法找到目标类%s,请联系管理员检查程序合理性", DBType.MySql.className));
+            throw HelperException.newException(ErrorCode.CLASS_NOT_FOUND,
+                    String.format("无法找到目标类%s,请联系管理员检查程序合理性", DbType.MySql.className));
         } catch (SQLException e) {
             log.error("SQL exception", e);
-            throw SysException.newException(DBError.CONNECTION_FAILED,
+            throw HelperException.newException(ErrorCode.CONNECTION_FAILED,
                     String.format("连接目标数据源时遇到错误%s，请检查连接信息", e.getMessage()));
         }
     }

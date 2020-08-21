@@ -2,7 +2,7 @@ package org.zipper.rule.pojo.entity;
 
 import lombok.Builder;
 import lombok.Data;
-import org.zipper.common.pojo.BaseEntity;
+import org.zipper.helper.web.entity.BaseEntity;
 
 import java.util.Date;
 

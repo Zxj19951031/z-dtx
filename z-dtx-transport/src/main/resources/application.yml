@@ -13,3 +13,16 @@ logging:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
+  mapper-locations: classpath*:mapper/*Mapper.xml
+
+swagger2:
+  apiInfo:
+    title: Title
+    version: 1.0
+    description: Swagger-UI
+    contact:
+      name: zhuxj
+      url: http://127.0.0.1
+      email: 870324066@qq.com
+  apis:
+    basePackage: org.zipper.transport.controller

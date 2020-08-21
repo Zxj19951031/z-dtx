@@ -1,4 +1,4 @@
-#DTX Configuration
+#DTX JsonObject
 ```json
 {
   "job":{

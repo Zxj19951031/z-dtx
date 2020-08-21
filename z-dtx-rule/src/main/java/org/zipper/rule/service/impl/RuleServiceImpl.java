@@ -8,9 +8,8 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.zipper.common.enums.Status;
-import org.zipper.common.exceptions.SysException;
-import org.zipper.common.exceptions.errors.QuartzError;
+import org.zipper.helper.exception.HelperException;
+import org.zipper.helper.quartz.QuartzError;
 import org.zipper.rule.mapper.RuleMapper;
 import org.zipper.rule.pojo.dto.RuleDTO;
 import org.zipper.rule.pojo.dto.RuleQueryParams;
@@ -19,6 +18,7 @@ import org.zipper.rule.pojo.vo.RuleVO;
 import org.zipper.rule.service.IRuleService;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,9 +34,9 @@ public class RuleServiceImpl implements IRuleService {
     public int addOne(RuleDTO dto) {
         Rule rule = Rule.builder().name(dto.getName()).expression(dto.getExpression())
                 .var1(dto.getVar1()).build();
-        rule.setCreateTime(Calendar.getInstance().getTime());
+        rule.setCreateTime(LocalDateTime.now());
         rule.setUpdateTime(rule.getCreateTime());
-        rule.setStatus(Status.VALID);
+        rule.setStatus(0);
         return this.ruleMapper.insertOne(rule);
     }
 
@@ -70,7 +70,7 @@ public class RuleServiceImpl implements IRuleService {
         List<String> result = null;
 
         if (!CronExpression.isValidExpression(cron))
-            throw SysException.newException(QuartzError.CRON_ERROR);
+            throw HelperException.newException(QuartzError.CRON_ERROR);
 
         Trigger trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule(cron)).build();
         Date offset = Calendar.getInstance().getTime();

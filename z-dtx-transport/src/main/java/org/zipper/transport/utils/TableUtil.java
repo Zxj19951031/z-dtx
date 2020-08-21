@@ -1,8 +1,8 @@
 package org.zipper.transport.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.zipper.common.exceptions.SysException;
-import org.zipper.common.exceptions.errors.DBError;
+import org.zipper.helper.exception.HelperException;
+import org.zipper.helper.exception.ErrorCode;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -20,10 +20,10 @@ public class TableUtil {
 
     private static final String TABLE_NAME = "TABLE_NAME";
 
-    public static List<String> getMySqlTables(Connection conn, String schema) {
+    public static List<String> getMySqlTables(Connection conn, String catalog) {
         try {
             DatabaseMetaData metaData = conn.getMetaData();
-            ResultSet resultSet = metaData.getTables(schema, null, null, null);
+            ResultSet resultSet = metaData.getTables(catalog, null, null, null);
             List<String> tables = new ArrayList<>();
             while (resultSet.next()) {
                 tables.add(resultSet.getString(TABLE_NAME));
@@ -33,7 +33,7 @@ public class TableUtil {
             return tables;
         } catch (SQLException e) {
             log.error("A error caused when getting MySql Tables", e);
-            throw SysException.newException(DBError.QUERY_ERROR, "查询目标MySql数据源表列表时失败，请联系管理员");
+            throw HelperException.newException(ErrorCode.QUERY_ERROR, "查询目标MySql数据源表列表时失败，请联系管理员");
         }
     }
 }

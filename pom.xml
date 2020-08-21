@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.4.RELEASE</version>
+        <version>2.3.1.RELEASE</version>
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -17,11 +17,8 @@
     <version>${revision}</version>
 
 
-
     <modules>
-        <module>common</module>
         <module>z-dtx-transport</module>
-        <module>z-dtx-engine</module>
         <module>z-dtx-discover</module>
         <module>z-dtx-rule</module>
     </modules>
@@ -35,10 +32,13 @@
         <logback.version>1.2.3</logback.version>
         <fastjson.version>1.2.59</fastjson.version>
         <hutool.version>4.6.8</hutool.version>
-        <mybatis.version>2.0.3</mybatis.version>
+        <mybatis.version>2.1.1</mybatis.version>
         <druid.version>1.1.18</druid.version>
         <pagehelper.version>1.2.5</pagehelper.version>
-
+        <z-helper-util>1.0.1</z-helper-util>
+        <z-helper-web>1.0.1</z-helper-web>
+        <z-helper-quartz>1.0.1</z-helper-quartz>
+        <z-helper-swagger>1.0.1</z-helper-swagger>
     </properties>
 
     <dependencyManagement>
@@ -66,35 +66,32 @@
                 <artifactId>logback-classic</artifactId>
                 <version>${logback.version}</version>
             </dependency>
-            <!--      交换引擎——交换模块      -->
-            <dependency>
-                <groupId>org.zipper.dtx</groupId>
-                <artifactId>z-dtx-common</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <!--      交换引擎——关系型插件模块      -->
-            <dependency>
-                <groupId>org.zipper.dtx</groupId>
-                <artifactId>z-dtx-rdbms-plugin</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <!--      交换引擎——入口      -->
-            <dependency>
-                <groupId>org.zipper.dtx</groupId>
-                <artifactId>z-dtx-core</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <!--      交换引擎——基础包      -->
-            <dependency>
-                <groupId>org.zipper.dtx</groupId>
-                <artifactId>common</artifactId>
-                <version>${revision}</version>
-            </dependency>
             <!--      fastjson      -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
+            </dependency>
+            <!--    z-helper        -->
+            <dependency>
+                <groupId>org.zipper</groupId>
+                <artifactId>z-helper-util</artifactId>
+                <version>${z-helper-util}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.zipper</groupId>
+                <artifactId>z-helper-web</artifactId>
+                <version>${z-helper-web}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.zipper</groupId>
+                <artifactId>z-helper-quartz</artifactId>
+                <version>${z-helper-quartz}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.zipper</groupId>
+                <artifactId>z-helper-swagger</artifactId>
+                <version>${z-helper-swagger}</version>
             </dependency>
             <!--      hutool      -->
             <dependency>
@@ -104,9 +101,9 @@
             </dependency>
             <!--      mybatis      -->
             <dependency>
-                <groupId>org.mybatis</groupId>
-                <artifactId>mybatis-spring</artifactId>
-                <version>${mybatis.version}</version>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>2.1.1</version>
             </dependency>
             <!--      druid      -->
             <dependency>
@@ -119,15 +116,6 @@
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>${pagehelper.version}</version>
-            </dependency>
-
-            <!--      spring cloud      -->
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Finchley.RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

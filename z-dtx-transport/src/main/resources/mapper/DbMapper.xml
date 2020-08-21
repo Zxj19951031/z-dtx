@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zipper.transport.mapper.DbMapper">
+
+    <insert id="insertOneMysql">
+        insert into tb_db_mysql(db_name, host, port, user, password, create_time, update_time, status)
+        values (#{r.dbName}, #{r.host}, #{r.port}, #{r.user}, #{r.password}, #{r.createTime}, #{r.updateTime},
+                #{r.status})
+    </insert>
+
+    <insert id="insertOneOracle">
+        insert into tb_db_oracle(db_name, host, port, user, password, create_time, update_time, status, conn_type)
+        values (#{r.dbName}, #{r.host}, #{r.port}, #{r.user}, #{r.password}, #{r.createTime}, #{r.updateTime},
+                #{r.status}, #{r.connType})
+    </insert>
+
+    <select id="selectUnionAll" resultType="org.zipper.transport.pojo.vo.DbVO"
+            parameterType="org.zipper.transport.pojo.dto.DbQueryParams">
+        select id,db_name,db_type,host,create_time,update_time from(
+        select id,db_name,1 as db_type,host,create_time,update_time from tb_db_mysql where status = 0
+        union all
+        select id,db_name,2 as db_type,host,create_time,update_time from tb_db_oracle where status = 0
+        ) as t
+        <where>
+            <if test="p.dbType!=null and p.dbType!=''">
+                t.db_type = #{p.dbType}
+            </if>
+            <if test="p.dbName!=null and p.dbName!=''">
+                t.db_name = #{p.dbName}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <update id="updateOneMySql" parameterType="org.zipper.transport.pojo.entity.MySqlDb">
+        update tb_db_mysql set update_time = #{r.updateTime}
+        <if test="r.dbName!=null and r.dbName!=''">
+            ,db_name = #{r.dbName}
+        </if>
+        <if test="r.host!=null and r.host!=''">
+            ,host = #{r.host}
+        </if>
+        <if test="r.port!=null and r.port &gt; 0">
+            ,port = #{r.port}
+        </if>
+        <if test="r.user!=null and r.user!=''">",
+            ,user = #{r.user}
+        </if>
+        <if test="r.password!=null and r.password!=''">
+            ,password = #{r.password}
+        </if>
+        where id = #{r.id}
+    </update>
+
+    <update id="updateOneOracle" parameterType="org.zipper.transport.pojo.entity.OracleDb">
+        update tb_db_oracle set update_time = #{r.updateTime}
+        <if test="r.dbName!=null and r.dbName!=''">
+            ,db_name = #{r.dbName}
+        </if>
+        <if test="r.host!=null and r.host!=''">
+            ,host = #{r.host}
+        </if>",
+        <if test="r.port!=null and r.port &gt; 0">
+            ,port = #{r.port}
+        </if>
+        <if test="r.user!=null and r.user!=''">
+            ,user = #{r.user}
+        </if>
+        <if test="r.password!=null and r.password!=''">
+            ,password = #{r.password}
+        </if>
+        <if test="r.connType!=null and r.connType!=''">
+            ,conn_type = #{r.connType}
+        </if>
+        where id = #{r.id}
+    </update>
+
+    <update id="deleteBatchMySql" parameterType="java.util.List">
+        update tb_db_mysql set update_time = now(),status = 1
+        <where>id in
+            <foreach item="item" collection="list" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </where>
+    </update>
+
+    <update id="deleteBatchOracle" parameterType="java.util.List">
+        update tb_db_oracle set update_time = now(),status = 1
+        <where>id in
+            <foreach item="item" collection="list" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </where>
+    </update>
+
+    <select id="selectOneMySql" resultType="org.zipper.transport.pojo.entity.MySqlDb" parameterType="java.lang.Integer">
+        select id,
+               db_name,
+               host,
+               port,
+               user,
+               password,
+               create_time,
+               update_time
+        from tb_db_mysql
+        where id = #{id}
+          and status = 0
+    </select>
+
+    <select id="selectOneOracle" resultType="org.zipper.transport.pojo.entity.OracleDb" parameterType="java.lang.Integer">
+        select id,
+               db_name,
+               host,
+               port,
+               user,
+               password,
+               conn_type,
+               create_time,
+               update_time
+        from tb_db_oracle
+        where id = #{id}
+          and status = 0
+    </select>
+</mapper>
