@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Catalog操作
+ * <p>
+ * mysql ：schema
+ *
  * @author zhuxj
  * @since 2020/5/12
  */
@@ -20,6 +24,11 @@ public class CatalogUtil {
 
     private static final String TABLE_CAT = "TABLE_CAT";
 
+    /**
+     * 获取MySql数据库的Schema列表
+     * @param conn 数据库连接
+     * @return list of schema
+     */
     public static List<String> getMySqlCatalogs(Connection conn) {
         try {
             DatabaseMetaData metaData = conn.getMetaData();

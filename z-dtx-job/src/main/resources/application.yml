@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    active: zhuxj
+
+logging:
+  level:
+    ch.qos.logback.core: warn
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true

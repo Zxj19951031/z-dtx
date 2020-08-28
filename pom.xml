@@ -20,7 +20,7 @@
     <modules>
         <module>z-dtx-transport</module>
         <module>z-dtx-discover</module>
-        <module>z-dtx-rule</module>
+        <module>z-dtx-job</module>
     </modules>
 
     <properties>

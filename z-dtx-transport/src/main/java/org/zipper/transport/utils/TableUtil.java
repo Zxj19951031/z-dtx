@@ -1,8 +1,8 @@
 package org.zipper.transport.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.zipper.helper.exception.HelperException;
 import org.zipper.helper.exception.ErrorCode;
+import org.zipper.helper.exception.HelperException;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 表操作
+ * <p>
+ * mysql：数据表
+ *
  * @author zhuxj
  * @since 2020/5/12
  */
@@ -20,6 +24,13 @@ public class TableUtil {
 
     private static final String TABLE_NAME = "TABLE_NAME";
 
+    /**
+     * 获取MySql数据表
+     *
+     * @param conn    数据库连接
+     * @param catalog schema名称
+     * @return list of tableName
+     */
     public static List<String> getMySqlTables(Connection conn, String catalog) {
         try {
             DatabaseMetaData metaData = conn.getMetaData();

@@ -9,6 +9,7 @@ spring:
 logging:
   level:
     ch.qos.logback.core: warn
+    org.zipper.transport.mapper: debug
 
 mybatis:
   configuration:

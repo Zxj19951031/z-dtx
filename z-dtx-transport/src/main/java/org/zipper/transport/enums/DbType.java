@@ -4,6 +4,7 @@ import com.alibaba.fastjson.serializer.JSONSerializable;
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import org.zipper.helper.exception.ErrorCode;
 import org.zipper.helper.exception.HelperException;
+import org.zipper.transport.pojo.entity.Transport;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
