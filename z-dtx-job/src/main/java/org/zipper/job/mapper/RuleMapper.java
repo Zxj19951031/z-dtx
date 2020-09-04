@@ -31,7 +31,7 @@ public interface RuleMapper {
     List<RuleVO> query(@Param("p") RuleQueryParams params);
 
     @Select("select id,name,expression,create_time,update_time,var1 from tb_rule where status = 0 and id = #{value}")
-    Rule selectOne(Integer id);
+    Rule selectOne(Long id);
 
     @Update({
             "<script>",

@@ -3,13 +3,14 @@
 <mapper namespace="org.zipper.transport.mapper.TransportMapper">
     <insert id="insert" parameterType="org.zipper.transport.pojo.entity.Transport" useGeneratedKeys="true"
             keyProperty="id">
-        insert into tb_transport(name, source, target, rule_id, config, metadata, create_time, update_time, status)
-        VALUES (#{t.name}, #{t.source}, #{t.target}, #{t.ruleId}, #{t.config}, #{t.metadata}, now(), now(), 0)
+        insert into tb_transport(name, source, target, rule_id, config, metadata, create_time, update_time, status,
+                                 registered)
+        VALUES (#{t.name}, #{t.source}, #{t.target}, #{t.ruleId}, #{t.config}, #{t.metadata}, now(), now(), 0, 0)
     </insert>
 
     <select id="select" parameterType="org.zipper.transport.pojo.dto.TransportQueryParams"
             resultType="org.zipper.transport.pojo.vo.TransportVO">
-        select id, name, create_time, update_time
+        select id, name,registered, create_time, update_time
         from tb_transport
         where status = 0
         <if test="p.name !=null and p.name !=''">
@@ -43,6 +44,9 @@
         </if>
         <if test="t.metadata !=null and t.metadata!=''">
             , metadata = #{t.metadata}
+        </if>
+        <if test="t.registered !=null">
+            , registered = #{t.registered}
         </if>
         where id = #{t.id}
     </update>

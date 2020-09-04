@@ -1,10 +1,10 @@
 package org.zipper.transport.pojo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.zipper.helper.web.entity.BaseEntity;
+import org.zipper.transport.enums.TransportScheduleStatus;
 
 /**
  * @author zhuxj
@@ -25,4 +25,6 @@ public class Transport extends BaseEntity {
     private String config;
     @ApiModelProperty(value = "前端元数据，后台留存")
     private String metadata;
+    @ApiModelProperty(value = "调度状态0-未调度，1-调度中")
+    private Integer registered;
 }

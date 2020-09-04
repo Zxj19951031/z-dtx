@@ -4,17 +4,16 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.zipper.helper.web.response.ResponseEntity;
-import org.zipper.transport.pojo.dto.DbDTO;
 import org.zipper.transport.pojo.dto.TransportQueryParams;
-import org.zipper.transport.pojo.entity.DataBase;
 import org.zipper.transport.pojo.entity.Transport;
 import org.zipper.transport.pojo.vo.TransportVO;
 import org.zipper.transport.service.TransportService;
+import org.zipper.transport.service.rpc.DtxJobService;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @author zhuxj
@@ -22,10 +21,14 @@ import java.util.List;
 @Api(tags = "传输管理")
 @RestController
 @RequestMapping(value = "transport")
+@Slf4j
 public class TransportController {
 
     @Resource
     private TransportService transportService;
+
+    @Resource
+    private DtxJobService dtxJobService;
 
     @ApiOperation(value = "新增传输任务")
     @PostMapping(value = "add")
@@ -41,7 +44,7 @@ public class TransportController {
                                                           @ApiParam(value = "查询条件-单页大小") @RequestParam(defaultValue = "20") Integer pageSize) {
 
         TransportQueryParams params = TransportQueryParams.builder().name(name).build();
-        PageInfo<TransportVO> vos = this.transportService.queryByParams(params,pageNum,pageSize);
+        PageInfo<TransportVO> vos = this.transportService.queryByParams(params, pageNum, pageSize);
         return ResponseEntity.success(vos);
     }
 
@@ -58,6 +61,35 @@ public class TransportController {
     public ResponseEntity<String> updateOne(@RequestBody Transport db) {
         boolean isSuccess = this.transportService.updateOne(db);
         return ResponseEntity.success("更新成功");
+    }
+
+    /**
+     * 这个接口是给外部调度服务进行唤起任务的
+     *
+     * @param id 传输任务编号
+     */
+    @ApiOperation(value = "运行传输任务")
+    @GetMapping(value = "run")
+    public ResponseEntity<String> runJob(@RequestParam Integer id) {
+        transportService.run(id);
+        return ResponseEntity.success("任务将在稍后执行，请观察日志查看任务运行状态");
+    }
+
+    /**
+     * 将任务注册至调度服务中心
+     */
+    @ApiOperation(value = "注册传输任务")
+    @GetMapping(value = "register")
+    public ResponseEntity<String> registerJob(@RequestParam Integer id) {
+        transportService.registerJob(id);
+        return ResponseEntity.success("启动任务成功，系统将按计划进行调度");
+    }
+
+    @ApiOperation(value = "注销传输任务")
+    @GetMapping(value = "cancel")
+    public ResponseEntity<String> cancelJob(@RequestParam Integer id){
+        transportService.cancelJob(id);
+        return ResponseEntity.success("启动任务成功，系统将按计划进行调度");
     }
 
 }

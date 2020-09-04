@@ -49,7 +49,7 @@ public class RuleServiceImpl implements IRuleService {
     }
 
     @Override
-    public Rule queryOne(Integer id) {
+    public Rule queryOne(Long id) {
         return this.ruleMapper.selectOne(id);
     }
 

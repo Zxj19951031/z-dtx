@@ -38,7 +38,7 @@ public class RuleController {
     }
 
     @GetMapping("find")
-    public ResponseEntity<Rule> findOne(@RequestParam Integer id) {
+    public ResponseEntity<Rule> findOne(@RequestParam Long id) {
         Rule rule = this.ruleService.queryOne(id);
         return ResponseEntity.success(rule);
     }

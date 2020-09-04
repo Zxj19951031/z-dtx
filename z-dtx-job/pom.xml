@@ -37,6 +37,7 @@
             <groupId>org.zipper</groupId>
             <artifactId>z-helper-quartz</artifactId>
         </dependency>
+
         <!--    springboot    -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -64,6 +65,10 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
         </dependency>
         <!--    mybatis    -->
         <dependency>

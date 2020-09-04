@@ -2,8 +2,17 @@ package org.zipper.transport.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.zipper.helper.data.transport.core.Engine;
+import org.zipper.helper.exception.HelperException;
+import org.zipper.helper.util.json.JsonObject;
+import org.zipper.helper.web.response.ResponseEntity;
 import org.zipper.transport.enums.DbType;
+import org.zipper.transport.enums.TransportScheduleStatus;
+import org.zipper.transport.error.TransportError;
 import org.zipper.transport.mapper.TransportMapper;
 import org.zipper.transport.pojo.dto.TransportQueryParams;
 import org.zipper.transport.pojo.entity.DataBase;
@@ -12,9 +21,11 @@ import org.zipper.transport.pojo.entity.Transport;
 import org.zipper.transport.pojo.vo.TransportVO;
 import org.zipper.transport.service.DbService;
 import org.zipper.transport.service.TransportService;
+import org.zipper.transport.service.rpc.DtxJobService;
 import org.zipper.transport.utils.ConfigUtil;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -22,12 +33,15 @@ import java.util.List;
  * @since 2020/08/27
  */
 @Service
+@Slf4j
 public class TransportServiceImpl implements TransportService {
 
     @Resource
     private TransportMapper transportMapper;
     @Resource
     private DbService dbService;
+    @Resource
+    private DtxJobService dtxJobService;
 
     @Override
     public int addOne(Transport transport) {
@@ -93,6 +107,49 @@ public class TransportServiceImpl implements TransportService {
         }
         int record = this.transportMapper.update(transport);
         return record == 1;
+    }
+
+    @Override
+    @Async("jobRunnerPool")
+    public void run(Integer id) {
+        Transport transport = queryOne(id);
+        try {
+            //补充必要参数
+            JsonObject allConfig = JsonObject.newDefault();
+            allConfig.set("job", JsonObject.from(transport.getConfig()));
+            allConfig.set("job.id", id.toString());
+            Engine engine = new Engine(allConfig);
+            engine.entry();
+        } catch (IOException e) {
+            log.error("传输任务执行失败", e);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void registerJob(Integer id) {
+        Transport transport = queryOne(id);
+        transport.setRegistered(TransportScheduleStatus.REGISTERED.getType());
+        updateOne(transport);
+        ResponseEntity resp = dtxJobService.registerJob(transport.getRuleId(), transport.getId());
+        if (resp.getCode() != 200) {
+            log.error("注册任务至调度中心失败,{}",resp.toString());
+            throw HelperException.newException(TransportError.REGISTER_ERROR);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void cancelJob(Integer id) {
+        Transport transport = queryOne(id);
+        transport.setRegistered(TransportScheduleStatus.CANCELED.getType());
+        updateOne(transport);
+        ResponseEntity resp = dtxJobService.cancelJob(transport.getId());
+        log.info(resp.toString());
+        if (resp.getCode() != 200) {
+            log.error("从调度中心注销任务失败,{}",resp.toString());
+            throw HelperException.newException(TransportError.REGISTER_ERROR);
+        }
     }
 }
 

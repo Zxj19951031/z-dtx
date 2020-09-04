@@ -13,7 +13,7 @@ public interface IRuleService {
 
     PageInfo<RuleVO> listPage(RuleQueryParams params, int pageSize, int pageNum);
 
-    Rule queryOne(Integer id);
+    Rule queryOne(Long id);
 
     boolean updateOne(RuleDTO dto);
 

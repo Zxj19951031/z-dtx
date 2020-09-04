@@ -4,18 +4,18 @@ package org.zipper.transport.error;
 import org.zipper.helper.exception.IErrorCode;
 
 /**
- * jdbc 有关错误
+ * 传输任务 有关错误
  * @author zhuxj
  * @since 2020/08/28
  */
-public enum JdbcError implements IErrorCode {
-    UNSUPPORTED_DB_TYPE(8001,"不支持的数据源类型")
+public enum TransportError implements IErrorCode {
+    REGISTER_ERROR(9001,"注册任务至调度中心失败")
     ;
 
     private final Integer code;
     private final String msg;
 
-    private JdbcError(Integer code, String msg) {
+    private TransportError(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }

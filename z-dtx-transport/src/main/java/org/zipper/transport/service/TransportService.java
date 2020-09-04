@@ -40,6 +40,7 @@ public interface TransportService {
 
     /**
      * 查询某个传输任务
+     *
      * @param id 任务编号
      * @return {@link Transport}
      */
@@ -47,8 +48,28 @@ public interface TransportService {
 
     /**
      * 更新某个传输任务
+     *
      * @param transport 任务详情
      * @return bool
      */
     boolean updateOne(Transport transport);
+
+    /**
+     * 异步执行某个传输任务
+     *
+     * @param id 任务编号
+     */
+    void run(Integer id);
+
+    /**
+     * 将任务注册到调度中心
+     * @param id 任务编号
+     */
+    void registerJob(Integer id);
+
+    /**
+     * 将任务从调度中心注销
+     * @param id 任务编号
+     */
+    void cancelJob(Integer id);
 }
