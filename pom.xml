@@ -41,6 +41,8 @@
         <z-helper-quartz>1.0.1</z-helper-quartz>
         <z-helper-swagger>1.0.1</z-helper-swagger>
         <z-helper-data-transport>1.0.0</z-helper-data-transport>
+        <fluentd.version>0.3.2</fluentd.version>
+        <logback-more-appenders.version>1.7.1</logback-more-appenders.version>
     </properties>
 
     <dependencyManagement>
@@ -67,6 +69,17 @@
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>${logback.version}</version>
+            </dependency>
+            <!--     fluentd     -->
+            <dependency>
+                <groupId>org.fluentd</groupId>
+                <artifactId>fluent-logger</artifactId>
+                <version>${fluentd.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sndyuk</groupId>
+                <artifactId>logback-more-appenders</artifactId>
+                <version>${logback-more-appenders.version}</version>
             </dependency>
             <!--      fastjson      -->
             <dependency>
@@ -124,14 +137,13 @@
                 <artifactId>c3p0</artifactId>
                 <version>${c3p0.version}</version>
             </dependency>
-
-
             <!--      pagehelper      -->
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>${pagehelper.version}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 

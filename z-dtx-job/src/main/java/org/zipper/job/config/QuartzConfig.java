@@ -1,12 +1,15 @@
 package org.zipper.job.config;
 
 import lombok.SneakyThrows;
+import org.quartz.JobDataMap;
 import org.quartz.Scheduler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.zipper.helper.quartz.QuartzUtils;
+import org.zipper.job.service.rpc.TransportService;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -17,14 +20,19 @@ import java.util.Properties;
 @Configuration
 public class QuartzConfig {
 
-    @Resource
+    @Autowired
     private DataSource dataSource;
 
-    @Resource
+    @Autowired
     private Scheduler scheduler;
 
+    @Autowired
+    private TransportService transportService;
+
+    @SneakyThrows
     @PostConstruct
     public void init() {
+        scheduler.getContext().putIfAbsent("transportService",transportService);
         QuartzUtils.init(scheduler);
     }
 
@@ -37,6 +45,8 @@ public class QuartzConfig {
         schedulerFactoryBean.setQuartzProperties(properties());
         schedulerFactoryBean.setWaitForJobsToCompleteOnShutdown(true);
         schedulerFactoryBean.setDataSource(dataSource);
+        JobDataMap dataMap = new JobDataMap();
+        schedulerFactoryBean.setSchedulerContextAsMap(dataMap);
         return schedulerFactoryBean;
     }
 

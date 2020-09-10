@@ -1,5 +1,6 @@
 package org.zipper.job.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +20,7 @@ import javax.annotation.Resource;
 @RequestMapping(value = "job")
 public class JobController {
 
-    @Resource
+    @Autowired
     private IJobService jobService;
 
     @GetMapping(value = "register")

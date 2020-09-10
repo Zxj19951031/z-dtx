@@ -43,7 +43,7 @@ public class ConnectionUtil {
                 conn.close();
             } catch (SQLException e) {
                 log.error("A error caused when close connection", e);
-                throw HelperException.newException(ErrorCode.CLOSE_ERROR, "关闭数据库连接失败，请及时联系管理员予以排查");
+                throw HelperException.newException(ErrorCode.CLOSE_DB_ERROR, "关闭数据库连接失败，请及时联系管理员予以排查");
             }
         }
     }

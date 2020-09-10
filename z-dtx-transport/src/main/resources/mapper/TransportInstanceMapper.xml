@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zipper.transport.mapper.TransportInstanceMapper">
+    <insert id="insert" parameterType="org.zipper.transport.pojo.entity.TransportInstance" keyProperty="id"
+            useGeneratedKeys="true">
+        INSERT INTO tb_transport_instance (tid, read_cnt, write_cnt, error_cnt, config, create_time, update_time,
+                                           status, start_time)
+        VALUES (#{i.tid}, 0, 0, 0, #{i.config}, now(), now(), #{i.status}, now())
+    </insert>
+
+
+    <update id="updateOne" parameterType="org.zipper.transport.pojo.entity.TransportInstance">
+        UPDATE tb_transport_instance
+        SET update_time = now()
+        <if test="i.readCnt!=null">
+            , read_cnt = #{i.readCnt}
+        </if>
+        <if test="i.writeCnt!=null">
+            , write_cnt = #{i.writeCnt}
+        </if>
+        <if test="i.errorCnt!=null">
+            , error_cnt = #{i.errorCnt}
+        </if>
+        <if test="i.status!=null">
+            , status = #{i.status}
+        </if>
+        <if test="i.startTime!=null">
+            , start_time = #{i.startTime}
+        </if>
+        <if test="i.endTime!=null">
+            , end_time = #{i.endTime}
+        </if>
+        WHERE id = #{i.id}
+    </update>
+    <select id="selectByTransportId" parameterType="java.lang.Integer"
+            resultType="org.zipper.transport.pojo.vo.TransportInstanceVO">
+        select id, read_cnt, write_cnt, error_cnt, status, start_time, end_time
+        from tb_transport_instance
+        where tid = #{value}
+    </select>
+    <select id="selectByInstanceId" resultType="org.zipper.transport.pojo.entity.TransportInstance">
+        select *
+        from tb_transport_instance
+        where id = #{value}
+    </select>
+</mapper>

@@ -1,6 +1,8 @@
 package org.zipper.job.service.rpc;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.zipper.helper.web.response.ResponseEntity;

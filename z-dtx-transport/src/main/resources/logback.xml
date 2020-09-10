@@ -136,8 +136,16 @@
         </filter>
     </appender>
 
+    <appender name="FLUENT" class="ch.qos.logback.more.appenders.DataFluentAppender">
+        <tag>dab</tag>
+        <label>normal</label>
+        <remoteHost>localhost</remoteHost>
+        <port>24224</port>
+    </appender>
+
     <root level="info">
         <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FLUENT" />
     </root>
 
 </configuration>

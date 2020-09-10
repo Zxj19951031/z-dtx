@@ -42,7 +42,7 @@ public class CatalogUtil {
             return catalogs;
         } catch (SQLException e) {
             log.error("A error caused when getting MySql schemas", e);
-            throw HelperException.newException(ErrorCode.QUERY_ERROR, "查询目标MySql数据源库列表时失败，请联系管理员");
+            throw HelperException.newException(ErrorCode.QUERY_DB_ERROR, "查询目标MySql数据源库列表时失败，请联系管理员");
         }
     }
 }

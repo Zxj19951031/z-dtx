@@ -3,14 +3,17 @@ package org.zipper.transport.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.zipper.helper.data.transport.common.collectors.JobPluginCollector;
 import org.zipper.helper.data.transport.core.Engine;
 import org.zipper.helper.exception.HelperException;
 import org.zipper.helper.util.json.JsonObject;
 import org.zipper.helper.web.response.ResponseEntity;
 import org.zipper.transport.enums.DbType;
+import org.zipper.transport.enums.TransportInstanceStatus;
 import org.zipper.transport.enums.TransportScheduleStatus;
 import org.zipper.transport.error.TransportError;
 import org.zipper.transport.mapper.TransportMapper;
@@ -18,14 +21,16 @@ import org.zipper.transport.pojo.dto.TransportQueryParams;
 import org.zipper.transport.pojo.entity.DataBase;
 import org.zipper.transport.pojo.entity.MySqlDb;
 import org.zipper.transport.pojo.entity.Transport;
+import org.zipper.transport.pojo.entity.TransportInstance;
 import org.zipper.transport.pojo.vo.TransportVO;
 import org.zipper.transport.service.DbService;
+import org.zipper.transport.service.TransportInstanceService;
 import org.zipper.transport.service.TransportService;
 import org.zipper.transport.service.rpc.DtxJobService;
 import org.zipper.transport.utils.ConfigUtil;
 
 import javax.annotation.Resource;
-import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -38,10 +43,12 @@ public class TransportServiceImpl implements TransportService {
 
     @Resource
     private TransportMapper transportMapper;
-    @Resource
+    @Autowired
     private DbService dbService;
-    @Resource
+    @Autowired
     private DtxJobService dtxJobService;
+    @Autowired
+    private TransportInstanceService transportInstanceService;
 
     @Override
     public int addOne(Transport transport) {
@@ -113,16 +120,35 @@ public class TransportServiceImpl implements TransportService {
     @Async("jobRunnerPool")
     public void run(Integer id) {
         Transport transport = queryOne(id);
+
+
+        //创建实例
+        TransportInstance instance = new TransportInstance();
+        instance.setTid(Long.valueOf(id));
+        instance.setConfig(transport.getConfig());
+        instance.setStatus(TransportInstanceStatus.RUNNING.getType());
+        long instanceId = transportInstanceService.addOne(instance);
+
+        //补充必要参数
+        JsonObject allConfig = JsonObject.newDefault();
+        allConfig.set("job", JsonObject.from(transport.getConfig()));
+        allConfig.set("job.id", id.toString() + "#" + instanceId);
         try {
-            //补充必要参数
-            JsonObject allConfig = JsonObject.newDefault();
-            allConfig.set("job", JsonObject.from(transport.getConfig()));
-            allConfig.set("job.id", id.toString());
             Engine engine = new Engine(allConfig);
-            engine.entry();
-        } catch (IOException e) {
+            JobPluginCollector collector = (JobPluginCollector) engine.entry();
+            instance.setReadCnt(collector.getReadCnt());
+            instance.setWriteCnt(collector.getWriteCnt());
+            instance.setErrorCnt(collector.getErrorCnt());
+            instance.setStartTime(collector.getStartLocalDateTime());
+            instance.setEndTime(collector.getEndLocalDateTime());
+            instance.setStatus(TransportInstanceStatus.SUCCESS.getType());
+        } catch (Exception e) {
             log.error("传输任务执行失败", e);
+            instance.setEndTime(LocalDateTime.now());
+            instance.setStatus(TransportInstanceStatus.FAIL.getType());
         }
+
+        transportInstanceService.updateOne(instance);
     }
 
     @Override
@@ -133,7 +159,7 @@ public class TransportServiceImpl implements TransportService {
         updateOne(transport);
         ResponseEntity resp = dtxJobService.registerJob(transport.getRuleId(), transport.getId());
         if (resp.getCode() != 200) {
-            log.error("注册任务至调度中心失败,{}",resp.toString());
+            log.error("注册任务至调度中心失败,{}", resp.toString());
             throw HelperException.newException(TransportError.REGISTER_ERROR);
         }
     }
@@ -147,7 +173,7 @@ public class TransportServiceImpl implements TransportService {
         ResponseEntity resp = dtxJobService.cancelJob(transport.getId());
         log.info(resp.toString());
         if (resp.getCode() != 200) {
-            log.error("从调度中心注销任务失败,{}",resp.toString());
+            log.error("从调度中心注销任务失败,{}", resp.toString());
             throw HelperException.newException(TransportError.REGISTER_ERROR);
         }
     }

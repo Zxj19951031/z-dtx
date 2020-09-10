@@ -44,7 +44,7 @@ public class TableUtil {
             return tables;
         } catch (SQLException e) {
             log.error("A error caused when getting MySql Tables", e);
-            throw HelperException.newException(ErrorCode.QUERY_ERROR, "查询目标MySql数据源表列表时失败，请联系管理员");
+            throw HelperException.newException(ErrorCode.QUERY_DB_ERROR, "查询目标MySql数据源表列表时失败，请联系管理员");
         }
     }
 }

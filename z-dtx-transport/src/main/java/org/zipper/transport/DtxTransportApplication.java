@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * @author zhuxj
@@ -21,6 +22,7 @@ import org.springframework.context.annotation.ImportResource;
 @MapperScan(basePackages = "org.zipper.transport.mapper")
 @EnableEurekaClient
 @EnableFeignClients
+@EnableAsync
 public class DtxTransportApplication {
 
     public static void main(String[] args) {

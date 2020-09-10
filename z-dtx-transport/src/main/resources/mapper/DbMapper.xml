@@ -43,7 +43,7 @@
         <if test="r.port!=null and r.port &gt; 0">
             ,port = #{r.port}
         </if>
-        <if test="r.user!=null and r.user!=''">",
+        <if test="r.user!=null and r.user!=''">
             ,user = #{r.user}
         </if>
         <if test="r.password!=null and r.password!=''">
@@ -107,7 +107,8 @@
           and status = 0
     </select>
 
-    <select id="selectOneOracle" resultType="org.zipper.transport.pojo.entity.OracleDb" parameterType="java.lang.Integer">
+    <select id="selectOneOracle" resultType="org.zipper.transport.pojo.entity.OracleDb"
+            parameterType="java.lang.Integer">
         select id,
                db_name,
                host,

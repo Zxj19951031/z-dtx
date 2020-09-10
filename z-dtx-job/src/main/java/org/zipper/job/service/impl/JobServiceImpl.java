@@ -1,6 +1,7 @@
 package org.zipper.job.service.impl;
 
 import org.quartz.CronScheduleBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zipper.helper.quartz.QuartzUtils;
 import org.zipper.job.pojo.entity.Rule;
@@ -26,7 +27,7 @@ public class JobServiceImpl implements IJobService {
     private static final String TRIGGER_GROUP_NAME = "Transport-Trigger-GROUP";
 
 
-    @Resource
+    @Autowired
     private IRuleService ruleService;
 
     @Override
