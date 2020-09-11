@@ -23,7 +23,7 @@ public interface DbService {
      * @param db 数据源入参
      * @return 成功插入记录数
      */
-    int addOne(DbDTO db);
+    Long addOne(DbDTO db);
 
     /**
      * 查询数据源列表

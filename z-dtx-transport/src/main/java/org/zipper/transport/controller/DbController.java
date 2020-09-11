@@ -32,8 +32,8 @@ public class DbController {
 
     @ApiOperation(value = "新增数据源")
     @PostMapping(value = "addOne")
-    public ResponseEntity<Integer> addOne(@RequestBody DbDTO db) {
-        int id = dbService.addOne(db);
+    public ResponseEntity<Long> addOne(@RequestBody DbDTO db) {
+        long id = dbService.addOne(db);
         return ResponseEntity.success(id);
     }
 

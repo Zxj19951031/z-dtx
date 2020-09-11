@@ -7,6 +7,7 @@ import org.zipper.transport.pojo.dto.DbDTO;
 import org.zipper.transport.pojo.entity.DataBase;
 import org.zipper.transport.pojo.entity.MySqlDb;
 import org.zipper.transport.pojo.entity.OracleDb;
+import org.zipper.transport.pojo.entity.SqlServerDb;
 
 /**
  * @author zhuxj
@@ -17,11 +18,33 @@ public class DbFactory {
     public DataBase createDb(DbDTO dto) {
         switch (dto.getDbType()) {
             case MySql:
-                return MySqlDb.builder().dbName(dto.getDbName()).host(dto.getHost()).user(dto.getUser())
-                        .password(dto.getPassword()).port(dto.getPort()).build();
+                return MySqlDb.builder()
+                        .dbName(dto.getDbName())
+                        .host(dto.getHost())
+                        .user(dto.getUser())
+                        .password(dto.getPassword())
+                        .port(dto.getPort())
+                        .build();
             case Oracle:
-                return OracleDb.builder().dbName(dto.getDbName()).host(dto.getHost()).user(dto.getUser())
-                        .password(dto.getPassword()).port(dto.getPort()).connType(dto.getConnType()).build();
+                return OracleDb.builder()
+                        .dbName(dto.getDbName())
+                        .host(dto.getHost())
+                        .user(dto.getUser())
+                        .password(dto.getPassword())
+                        .port(dto.getPort())
+                        .connType(dto.getConnType())
+                        .connValue(dto.getConnValue())
+                        .driver(dto.getDriver())
+                        .build();
+            case SqlServer:
+                return SqlServerDb.builder()
+                        .dbName(dto.getDbName())
+                        .host(dto.getHost())
+                        .user(dto.getUser())
+                        .password(dto.getPassword())
+                        .port(dto.getPort())
+                        .database(dto.getDatabase())
+                        .build();
             default:
                 throw HelperException.newException(ErrorCode.UNKNOWN_TYPE,
                         String.format("不支持的数据源类型:[%s]", dto.getDbType()));

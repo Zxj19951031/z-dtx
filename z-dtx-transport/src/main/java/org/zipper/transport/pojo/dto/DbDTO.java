@@ -28,6 +28,12 @@ public class DbDTO {
     private String password;
     @ApiModelProperty(value = "连接类型", allowableValues = "SID,SERVER_NAME,TNS")
     private String connType;
+    @ApiModelProperty(value = "连接类型值")
+    private String connValue;
+    @ApiModelProperty(value = "驱动类型[Thin,OCI,OCI8]")
+    private String driver;
+    @ApiModelProperty(value = "数据库")
+    private String database;
 
     /**
      * 重载set
@@ -40,6 +46,7 @@ public class DbDTO {
 
     /**
      * 重载set
+     *
      * @param val see type properties of {@link DbType}
      */
     public void setDbType(int val) {

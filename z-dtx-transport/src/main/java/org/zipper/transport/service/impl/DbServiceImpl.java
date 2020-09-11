@@ -16,6 +16,7 @@ import org.zipper.transport.pojo.dto.*;
 import org.zipper.transport.pojo.entity.DataBase;
 import org.zipper.transport.pojo.entity.MySqlDb;
 import org.zipper.transport.pojo.entity.OracleDb;
+import org.zipper.transport.pojo.entity.SqlServerDb;
 import org.zipper.transport.pojo.vo.DbVO;
 import org.zipper.transport.service.DbService;
 import org.zipper.transport.utils.CatalogUtil;
@@ -23,6 +24,7 @@ import org.zipper.transport.utils.ColumnUtil;
 import org.zipper.transport.utils.ConnectionUtil;
 import org.zipper.transport.utils.TableUtil;
 
+import javax.annotation.Resource;
 import java.sql.Connection;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -40,13 +42,13 @@ import java.util.stream.Collectors;
 @Transactional
 public class DbServiceImpl implements DbService {
 
-    @Autowired
+    @Resource
     private DbMapper dbMapper;
     @Autowired
     private DbFactory dbFactory;
 
     @Override
-    public int addOne(DbDTO db) {
+    public Long addOne(DbDTO db) {
 
         DataBase dataBase = dbFactory.createDb(db);
         BaseEntity record = (BaseEntity) dataBase;
@@ -54,19 +56,21 @@ public class DbServiceImpl implements DbService {
         record.setUpdateTime(record.getCreateTime());
         record.setStatus(0);
 
-        int id;
         switch (db.getDbType()) {
             case MySql:
-                id = dbMapper.insertOneMysql((MySqlDb) record);
+                dbMapper.insertOneMysql((MySqlDb) record);
                 break;
             case Oracle:
-                id = dbMapper.insertOneOracle((OracleDb) record);
+                dbMapper.insertOneOracle((OracleDb) record);
+                break;
+            case SqlServer:
+                dbMapper.insertOneSqlServer((SqlServerDb) record);
                 break;
             default:
                 throw HelperException.newException(ErrorCode.UNKNOWN_TYPE,
                         String.format("不支持的数据源类型:[%s]", db.getDbType()));
         }
-        return id;
+        return record.getId();
     }
 
     @Override
@@ -98,6 +102,9 @@ public class DbServiceImpl implements DbService {
             case Oracle:
                 cnt = dbMapper.updateOneOracle((OracleDb) record);
                 break;
+            case SqlServer:
+                cnt = dbMapper.updateOneSqlServer((SqlServerDb) record);
+                break;
             default:
                 throw HelperException.newException(ErrorCode.UNKNOWN_TYPE,
                         String.format("不支持的数据源类型:[%s]", db.getDbType()));
@@ -127,6 +134,9 @@ public class DbServiceImpl implements DbService {
                 case Oracle:
                     cnt.addAndGet(dbMapper.deleteBatchOracle(ids));
                     break;
+                case SqlServer:
+                    cnt.addAndGet(dbMapper.deleteBatchSqlServer(ids));
+                    break;
                 default:
                     throw HelperException.newException(ErrorCode.UNKNOWN_TYPE,
                             String.format("不支持的数据源类型:[%s],删除失败请重试", type));
@@ -148,6 +158,9 @@ public class DbServiceImpl implements DbService {
             case Oracle:
                 result = dbMapper.selectOneOracle(id);
                 break;
+            case SqlServer:
+                result = dbMapper.selectOneSqlServer(id);
+                break;
             default:
                 throw HelperException.newException(ErrorCode.UNKNOWN_TYPE,
                         String.format("不支持的数据源类型:[%s]", DbType.get(dbType)));
@@ -162,7 +175,14 @@ public class DbServiceImpl implements DbService {
                 ConnectionUtil.checkMysql(db.getHost(), db.getPort(), db.getUser(), db.getPassword());
                 break;
             case Oracle:
+                ConnectionUtil.checkOracle(db.getHost(), db.getPort(), db.getUser(), db.getPassword(), db.getConnType(), db.getConnValue(), db.getDriver());
                 break;
+            case SqlServer:
+                ConnectionUtil.checkSqlServer(db.getHost(), db.getPort(), db.getUser(), db.getPassword(), db.getDatabase());
+                break;
+            default:
+                throw HelperException.newException(ErrorCode.UNKNOWN_TYPE,
+                        String.format("不支持的数据源类型:[%s]", db.getDbType()));
         }
         return true;
     }

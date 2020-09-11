@@ -121,15 +121,23 @@
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.sndyuk</groupId>
+            <artifactId>logback-more-appenders</artifactId>
+        </dependency>
+        <!--fluentd-->
         <dependency>
             <groupId>org.fluentd</groupId>
             <artifactId>fluent-logger</artifactId>
         </dependency>
-
+        <!--     jdbc       -->
         <dependency>
-            <groupId>com.sndyuk</groupId>
-            <artifactId>logback-more-appenders</artifactId>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
         </dependency>
     </dependencies>
     <build>

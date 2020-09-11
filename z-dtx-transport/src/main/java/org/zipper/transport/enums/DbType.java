@@ -4,7 +4,6 @@ import com.alibaba.fastjson.serializer.JSONSerializable;
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import org.zipper.helper.exception.ErrorCode;
 import org.zipper.helper.exception.HelperException;
-import org.zipper.transport.pojo.entity.Transport;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -16,7 +15,8 @@ import java.lang.reflect.Type;
 
 public enum DbType implements JSONSerializable {
     MySql(1, "com.mysql.jdbc.Driver"),
-    Oracle(2, "oracle.jdbc.driver.OracleDriver");
+    Oracle(2, "oracle.jdbc.driver.OracleDriver"),
+    SqlServer(3, "com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
     /**
      * 枚举值
