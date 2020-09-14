@@ -148,7 +148,7 @@ public class DbServiceImpl implements DbService {
     }
 
     @Override
-    public DataBase queryOne(Integer id, Integer dbType) {
+    public DataBase queryOne(Integer dbType, Integer id) {
 
         DataBase result = null;
         switch (DbType.get(dbType)) {
@@ -189,10 +189,14 @@ public class DbServiceImpl implements DbService {
 
     @Override
     public List<String> getInfo(DataBase dataBase, DbType dbType, DbInfo dbInfo, DbInfoParams params) {
+        Connection conn = null;
         switch (dbType) {
             case MySql:
-                MySqlDb db = (MySqlDb) dataBase;
-                Connection conn = ConnectionUtil.getMysqlConnection(db.getHost(), db.getPort(), db.getUser(), db.getPassword());
+                conn = ConnectionUtil.getMysqlConnection(
+                        ((MySqlDb) dataBase).getHost(),
+                        ((MySqlDb) dataBase).getPort(),
+                        ((MySqlDb) dataBase).getUser(),
+                        ((MySqlDb) dataBase).getPassword());
                 switch (dbInfo) {
                     case CATALOG:
                         return CatalogUtil.getMySqlCatalogs(conn);
@@ -200,10 +204,29 @@ public class DbServiceImpl implements DbService {
                         return TableUtil.getMySqlTables(conn, params.getCatalog());
                     case COLUMN:
                         return ColumnUtil.getMySqlColumns(conn, params.getCatalog(), params.getTable());
+                    default:
                 }
                 break;
             case Oracle:
+                conn = ConnectionUtil.getOracleConnection(
+                        ((OracleDb) dataBase).getHost(),
+                        ((OracleDb) dataBase).getPort(),
+                        ((OracleDb) dataBase).getUser(),
+                        ((OracleDb) dataBase).getPassword(),
+                        ((OracleDb) dataBase).getConnType(),
+                        ((OracleDb) dataBase).getConnValue(),
+                        ((OracleDb) dataBase).getDriver());
+                switch (dbInfo) {
+                    case CATALOG:
+                        return CatalogUtil.getOracleCatalogs(conn);
+                    case TABLE:
+                        return TableUtil.getOracleTables(conn, params.getCatalog());
+                    case COLUMN:
+                        return ColumnUtil.getOracleColumns(conn, params.getCatalog(), params.getTable());
+                    default:
+                }
                 break;
+            default:
         }
         return new ArrayList<>();
     }

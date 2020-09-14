@@ -18,10 +18,7 @@ import org.zipper.transport.enums.TransportScheduleStatus;
 import org.zipper.transport.error.TransportError;
 import org.zipper.transport.mapper.TransportMapper;
 import org.zipper.transport.pojo.dto.TransportQueryParams;
-import org.zipper.transport.pojo.entity.DataBase;
-import org.zipper.transport.pojo.entity.MySqlDb;
-import org.zipper.transport.pojo.entity.Transport;
-import org.zipper.transport.pojo.entity.TransportInstance;
+import org.zipper.transport.pojo.entity.*;
 import org.zipper.transport.pojo.vo.TransportVO;
 import org.zipper.transport.service.DbService;
 import org.zipper.transport.service.TransportInstanceService;
@@ -60,6 +57,13 @@ public class TransportServiceImpl implements TransportService {
             case MySql:
                 transport.setConfig(ConfigUtil.supplementMySqlReader(transport.getConfig(), (MySqlDb) sourceDataBase));
                 break;
+            case SqlServer:
+                break;
+            case Oracle:
+                transport.setConfig(ConfigUtil.supplementOracleReader(transport.getConfig(), (OracleDb) sourceDataBase));
+                break;
+            default:
+                break;
         }
 
         int targetDbType = Integer.parseInt(transport.getTarget().split("-")[0]);
@@ -68,6 +72,13 @@ public class TransportServiceImpl implements TransportService {
         switch (DbType.get(targetDbType)) {
             case MySql:
                 transport.setConfig(ConfigUtil.supplementMySqlWriter(transport.getConfig(), (MySqlDb) targetDataBase));
+                break;
+            case SqlServer:
+                break;
+            case Oracle:
+                transport.setConfig(ConfigUtil.supplementOracleWriter(transport.getConfig(), (OracleDb) targetDataBase));
+                break;
+            default:
                 break;
         }
 
@@ -102,6 +113,12 @@ public class TransportServiceImpl implements TransportService {
             case MySql:
                 transport.setConfig(ConfigUtil.supplementMySqlReader(transport.getConfig(), (MySqlDb) sourceDataBase));
                 break;
+            case SqlServer:
+                break;
+            case Oracle:
+                break;
+            default:
+                break;
         }
 
         int targetDbType = Integer.parseInt(transport.getTarget().split("-")[0]);
@@ -110,6 +127,13 @@ public class TransportServiceImpl implements TransportService {
         switch (DbType.get(targetDbType)) {
             case MySql:
                 transport.setConfig(ConfigUtil.supplementMySqlWriter(transport.getConfig(), (MySqlDb) targetDataBase));
+                break;
+            case SqlServer:
+                break;
+            case Oracle:
+                transport.setConfig(ConfigUtil.supplementOracleWriter(transport.getConfig(), (OracleDb) targetDataBase));
+                break;
+            default:
                 break;
         }
         int record = this.transportMapper.update(transport);

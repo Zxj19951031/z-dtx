@@ -8,6 +8,7 @@ import org.zipper.transport.enums.OracleConnType;
 import org.zipper.transport.error.JdbcError;
 import org.zipper.transport.pojo.entity.DataBase;
 import org.zipper.transport.pojo.entity.MySqlDb;
+import org.zipper.transport.pojo.entity.OracleDb;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -164,7 +165,7 @@ public class ConnectionUtil {
      * @param connValue 连接类型值
      * @param driver    驱动类型
      */
-    private static Connection getOracleConnection(String host, Integer port, String username, String pwd, String connType, String connValue, String driver) {
+    public static Connection getOracleConnection(String host, Integer port, String username, String pwd, String connType, String connValue, String driver) {
         try {
             Class.forName(DbType.Oracle.className);
 
@@ -206,6 +207,31 @@ public class ConnectionUtil {
     public static String getJdbcUrl(DataBase dataBase) {
         if (dataBase instanceof MySqlDb) {
             return String.format("jdbc:mysql://%s:%s", ((MySqlDb) dataBase).getHost(), ((MySqlDb) dataBase).getPort());
+        } else if (dataBase instanceof OracleDb) {
+            String url = "";
+            switch (OracleConnType.get(((OracleDb) dataBase).getConnType())) {
+                case SID:
+                    url = String.format("jdbc:oracle:%s:@%s:%s:%s",
+                            ((OracleDb) dataBase).getDriver().toLowerCase(),
+                            ((OracleDb) dataBase).getHost(),
+                            ((OracleDb) dataBase).getPort(),
+                            ((OracleDb) dataBase).getConnValue());
+                    break;
+                case SERVICE_NAME:
+                    url = String.format("jdbc:oracle:%s:@//%s:%s/%s",
+                            ((OracleDb) dataBase).getDriver().toLowerCase(),
+                            ((OracleDb) dataBase).getHost(),
+                            ((OracleDb) dataBase).getPort(),
+                            ((OracleDb) dataBase).getConnValue());
+                    break;
+                case TNS:
+                    url = String.format("jdbc:oracle:%s:@%s",
+                            ((OracleDb) dataBase).getDriver().toLowerCase(),
+                            ((OracleDb) dataBase).getConnValue());
+                    break;
+                default:
+            }
+            return url;
         } else {
             log.error("不支持的数据源类型{}，无法正确获取JDBC url", dataBase.getClass().getName());
             throw HelperException.newException(JdbcError.UNSUPPORTED_DB_TYPE, "不支持的数据源类型，无法正确获取JDBC url");

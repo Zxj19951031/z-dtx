@@ -8,7 +8,6 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.MatchPhraseQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -69,29 +68,19 @@ public class TransportInstanceServiceImpl implements TransportInstanceService {
     @Override
     public List<String> queryLog(Integer instanceId, Integer pageNum, Integer pageSize) {
         TransportInstance instance = queryByInstanceId(instanceId);
-        String jobKey = String.format("job-%s#%s", instance.getTid(), instanceId);
-        String readerKey = String.format("reader-%s#%s-*", instance.getTid(), instanceId);
-        String writerKey = String.format("writer-%s#%s-*", instance.getTid(), instanceId);
-
-
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.from(pageNum * pageSize).size(pageSize)
                 .sort("@timestamp", SortOrder.ASC)
                 .query(QueryBuilders
                         .boolQuery()
-                        .must(QueryBuilders
-                                .boolQuery()
-                                .minimumShouldMatch(1)
-                                .should(new MatchPhraseQueryBuilder("thread", jobKey))
-                                .should(new MatchPhraseQueryBuilder("thread", readerKey))
-                                .should(new MatchPhraseQueryBuilder("thread", writerKey)))
+                        .must(new MatchPhraseQueryBuilder("thread", String.format("*%s#%s*", instance.getTid(), instanceId)))
                         .must(QueryBuilders
                                 .boolQuery().minimumShouldMatch(1)
                                 .should(new MatchPhraseQueryBuilder("level", "INFO"))
                                 .should(new MatchPhraseQueryBuilder("level", "WARN"))
                                 .should(new MatchPhraseQueryBuilder("level", "ERROR"))));
 
-        SearchRequest request = new SearchRequest("fluentd-20200909");
+        SearchRequest request = new SearchRequest("fluentd-*");
         request.source(searchSourceBuilder);
 
 
@@ -102,7 +91,13 @@ public class TransportInstanceServiceImpl implements TransportInstanceService {
                 SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 for (SearchHit hit : response.getHits().getHits()) {
                     String timestamp = sf.format(new Date((Long) hit.getSortValues()[0]));
-                    msg.add(String.format("%s %s", timestamp, hit.getSourceAsMap().get("msg")));
+                    String msgStr = String.format("%s %s",
+                            timestamp,
+                            hit.getSourceAsMap().get("msg"));
+                    if ("ERROR".equals(hit.getSourceAsMap().get("level"))) {
+                        msgStr = String.format("%s\n%s", msgStr, hit.getSourceAsMap().get("throwable"));
+                    }
+                    msg.add(msgStr);
                 }
             }
         } catch (IOException e) {

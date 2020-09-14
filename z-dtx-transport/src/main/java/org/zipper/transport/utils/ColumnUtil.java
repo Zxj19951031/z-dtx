@@ -45,4 +45,29 @@ public class ColumnUtil {
             throw HelperException.newException(ErrorCode.QUERY_DB_ERROR, "查询目标MySql数据源表列表时失败，请联系管理员");
         }
     }
+
+    /**
+     * 获取 Oracle 字段列表
+     *
+     * @param conn    数据库连接
+     * @param catalog schema数据库
+     * @param table   数据表
+     * @return list of columnName[columnType]
+     */
+    public static List<String> getOracleColumns(Connection conn, String catalog, String table) {
+        try {
+            DatabaseMetaData metaData = conn.getMetaData();
+            ResultSet resultSet = metaData.getColumns(null, catalog, table, "%");
+            List<String> columns = new ArrayList<>();
+            while (resultSet.next()) {
+                columns.add(String.format("%s[%s]", resultSet.getString("column_name"), resultSet.getString("type_name")));
+            }
+            resultSet.close();
+            conn.close();
+            return columns;
+        } catch (SQLException e) {
+            log.error("A error caused when getting Oracle Columns", e);
+            throw HelperException.newException(ErrorCode.QUERY_DB_ERROR, "查询目标Oracle数据源表列表时失败，请联系管理员");
+        }
+    }
 }

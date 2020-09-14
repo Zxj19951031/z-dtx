@@ -53,7 +53,7 @@ public class DbController {
     public ResponseEntity<DataBase> findOne(@ApiParam(value = "数据源编号") @RequestParam Integer id,
                                             @ApiParam(value = "数据源类型") @RequestParam Integer dbType) {
 
-        DataBase db = dbService.queryOne(id, dbType);
+        DataBase db = dbService.queryOne(dbType, id);
         return ResponseEntity.success(db);
 
     }
@@ -85,7 +85,7 @@ public class DbController {
                                                   @ApiParam(value = "数据源编号") @PathVariable int id,
                                                   @ApiParam(value = "标签类型") @PathVariable String tag,
                                                   @RequestBody DbInfoParams params) {
-        DataBase dataBase = dbService.queryOne(id, type);
+        DataBase dataBase = dbService.queryOne(type, id);
         List<String> result = dbService.getInfo(dataBase, DbType.get(type), DbInfo.get(tag), params);
         return ResponseEntity.success(result);
     }

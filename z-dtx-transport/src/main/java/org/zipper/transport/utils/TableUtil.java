@@ -47,4 +47,29 @@ public class TableUtil {
             throw HelperException.newException(ErrorCode.QUERY_DB_ERROR, "查询目标MySql数据源表列表时失败，请联系管理员");
         }
     }
+
+
+    /**
+     * 获取Oracle数据表
+     *
+     * @param conn   数据库连接
+     * @param schema schema名称
+     * @return list of tableName
+     */
+    public static List<String> getOracleTables(Connection conn, String schema) {
+        try {
+            DatabaseMetaData metaData = conn.getMetaData();
+            ResultSet resultSet = metaData.getTables(null, schema, null, null);
+            List<String> tables = new ArrayList<>();
+            while (resultSet.next()) {
+                tables.add(resultSet.getString(TABLE_NAME));
+            }
+            resultSet.close();
+            conn.close();
+            return tables;
+        } catch (SQLException e) {
+            log.error("A error caused when getting Oracle Tables", e);
+            throw HelperException.newException(ErrorCode.QUERY_DB_ERROR, "查询目标Oracle数据源表列表时失败，请联系管理员");
+        }
+    }
 }

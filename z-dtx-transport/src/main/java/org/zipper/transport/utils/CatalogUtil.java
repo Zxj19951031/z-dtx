@@ -23,9 +23,11 @@ import java.util.List;
 public class CatalogUtil {
 
     private static final String TABLE_CAT = "TABLE_CAT";
+    private static final String TABLE_SCHEMA = "table_schem";
 
     /**
      * 获取MySql数据库的Schema列表
+     *
      * @param conn 数据库连接
      * @return list of schema
      */
@@ -43,6 +45,29 @@ public class CatalogUtil {
         } catch (SQLException e) {
             log.error("A error caused when getting MySql schemas", e);
             throw HelperException.newException(ErrorCode.QUERY_DB_ERROR, "查询目标MySql数据源库列表时失败，请联系管理员");
+        }
+    }
+
+    /**
+     * 获取Oracle数据库的Schema列表
+     *
+     * @param conn 数据库连接
+     * @return list of schema
+     */
+    public static List<String> getOracleCatalogs(Connection conn) {
+        try {
+            DatabaseMetaData metaData = conn.getMetaData();
+            ResultSet resultSet = metaData.getSchemas();
+            List<String> catalogs = new ArrayList<>();
+            while (resultSet.next()) {
+                catalogs.add(resultSet.getString(TABLE_SCHEMA));
+            }
+            resultSet.close();
+            conn.close();
+            return catalogs;
+        } catch (SQLException e) {
+            log.error("A error caused when getting Oracle schemas", e);
+            throw HelperException.newException(ErrorCode.QUERY_DB_ERROR, "查询目标Oracle数据源库列表时失败，请联系管理员");
         }
     }
 }

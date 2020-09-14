@@ -5,7 +5,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
-import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.zipper.helper.web.response.ResponseEntity;
@@ -16,7 +15,6 @@ import org.zipper.transport.pojo.vo.TransportVO;
 import org.zipper.transport.service.TransportInstanceService;
 import org.zipper.transport.service.TransportService;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -111,10 +109,9 @@ public class TransportController {
 
     @ApiOperation(value = "实例日志")
     @GetMapping(value = "instance/log")
-    public ResponseEntity<List<String>> instanceLog(@ApiParam(value = "传输任务编号实例") @RequestParam Integer instanceId,
-                                                    @ApiParam(value = "查询条件-页码，小于0取所有") @RequestParam(defaultValue = "0") Integer pageNum,
-                                                    @ApiParam(value = "查询条件-单页大小") @RequestParam(defaultValue = "20") Integer pageSize) {
-
+    public ResponseEntity<List<String>> instanceLog(@ApiParam(value = "查询条件-页码，小于0取所有") @RequestParam(defaultValue = "0") Integer pageNum,
+                                                    @ApiParam(value = "查询条件-单页大小") @RequestParam(defaultValue = "20") Integer pageSize,
+                                                    @ApiParam(value = "传输任务编号实例") @RequestParam Integer instanceId) {
 
         return ResponseEntity.success(this.transportInstanceService.queryLog(instanceId, pageNum, pageSize));
     }

@@ -68,7 +68,7 @@ public interface DbService {
      * @see org.zipper.transport.pojo.entity.MySqlDb
      * @see org.zipper.transport.pojo.entity.OracleDb
      */
-    DataBase queryOne(Integer id, Integer dbType);
+    DataBase queryOne(Integer dbType, Integer id);
 
     /**
      * 确认数据源联通性
