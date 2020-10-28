@@ -21,9 +21,11 @@
         <module>z-dtx-transport</module>
         <module>z-dtx-discover</module>
         <module>z-dtx-job</module>
+        <module>z-helper-data-transport</module>
     </modules>
 
     <properties>
+        <maven.test.skip>true</maven.test.skip>
         <revision>2.0.1</revision>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>

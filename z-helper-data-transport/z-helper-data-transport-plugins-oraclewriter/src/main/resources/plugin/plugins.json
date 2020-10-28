@@ -1,0 +1,22 @@
+{
+  "name": "oraclewriter",
+  "parameter": {
+    "jdbcUrl": "jdbc:oracle:thin:@localhost:1521:helowin",
+    "username": "system",
+    "password": "system",
+    "table": "tb_to",
+    "columns": [
+      "col_varchar",
+      "col_int",
+      "col_decimal",
+      "col_float",
+      "col_double",
+      "col_time",
+      "col_blob",
+      "col_boolean"
+    ],
+    "loginTimeout": 120,
+    "bufferSize": 1000,
+    "queryTimeout": 60
+  }
+}

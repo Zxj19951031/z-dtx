@@ -1,0 +1,53 @@
+<assembly
+        xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/3.1.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/3.1.0 http://maven.apache.org/xsd/assembly-3.1.0.xsd">
+    <id>z-helper-data-transport</id>
+    <formats>
+        <format>tar.gz</format>
+        <format>dir</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+
+        <fileSet>
+            <directory>z-helper-data-transport-core/target/dtx-z-dtx-core/</directory>
+            <includes>
+                <include>**/*.*</include>
+            </includes>
+            <outputDirectory>dtx</outputDirectory>
+        </fileSet>
+
+        <!-- reader -->
+        <fileSet>
+            <directory>z-helper-data-transport-plugins-mysqlreader/target/dtx-mysqlreader/</directory>
+            <includes>
+                <include>**/*.*</include>
+            </includes>
+            <outputDirectory>dtx</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>z-helper-data-transport-plugins-oraclereader/target/dtx-oraclereader/</directory>
+            <includes>
+                <include>**/*.*</include>
+            </includes>
+            <outputDirectory>dtx</outputDirectory>
+        </fileSet>
+
+        <!-- writer -->
+        <fileSet>
+            <directory>z-helper-data-transport-plugins-mysqlwriter/target/dtx-mysqlwriter/</directory>
+            <includes>
+                <include>**/*.*</include>
+            </includes>
+            <outputDirectory>dtx</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>z-helper-data-transport-plugins-oraclewriter/target/dtx-oraclewriter/</directory>
+            <includes>
+                <include>**/*.*</include>
+            </includes>
+            <outputDirectory>dtx</outputDirectory>
+        </fileSet>
+    </fileSets>
+</assembly>

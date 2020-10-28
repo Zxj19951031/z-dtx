@@ -1,0 +1,69 @@
+{
+  "job": {
+    "id": "5#95",
+    "content": {
+      "reader": {
+        "parameter": {
+          "querySql": "",
+          "postSql": "",
+          "queryTimeout": 60,
+          "password": "123456",
+          "columns": [
+            "col_varchar",
+            "col_int",
+            "col_decimal",
+            "col_float",
+            "col_double",
+            "col_time",
+            "col_blob",
+            "col_boolean"
+          ],
+          "jdbcUrl": "jdbc:mysql://127.0.0.1:3306",
+          "loginTimeout": 120,
+          "where": "",
+          "table": "z_test.tb_from",
+          "username": "root",
+          "primaryKey": "",
+          "preSql": ""
+        },
+        "name": "mysqlreader"
+      },
+      "writer": {
+        "parameter": {
+          "postSql": "delete from tb_to where 1=2;",
+          "queryTimeout": 60,
+          "password": "system",
+          "columns": [
+            "COL_VARCHAR",
+            "COL_INT",
+            "COL_DECIMAL",
+            "COL_FLOAT",
+            "COL_DOUBLE",
+            "COL_TIME",
+            "COL_BLOB",
+            "COL_BOOLEAN"
+          ],
+          "jdbcUrl": "jdbc:oracle:thin:@127.0.0.1:1521:helowin",
+          "loginTimeout": 120,
+          "table": "TB_TO",
+          "username": "system",
+          "bufferSize": 1000,
+          "preSql": "delete from tb_to where 1=2;"
+        },
+        "name": "oralcewriter"
+      }
+    },
+    "tunnel": {
+      "byteCapacity": 8388608,
+      "bufferSize": 1024
+    },
+    "setting": {
+      "report": {
+        "interval": 5000
+      },
+      "speed": {
+        "channel": 1
+      }
+    }
+  }
+}

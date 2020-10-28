@@ -1,0 +1,24 @@
+{
+  "name": "mysqlreader",
+  "parameter": {
+    "jdbcUrl": "jdbc:mysql://localhost:3306/z_test?useUnicode=true&characterEncoding=utf-8",
+    "username": "root",
+    "password": "123456",
+    "table": "tb_from",
+    "columns": [
+      "col_varchar",
+      "col_int",
+      "col_decimal",
+      "col_float",
+      "col_double",
+      "col_time",
+      "col_blob",
+      "col_boolean"
+    ],
+    "querySql": "select cus_name,'静态字段',id from tb_source_info_odps where 1=1",
+    "queryTimeout": 60,
+    "loginTimeout": 120,
+    "where": "1=1",
+    "primaryKey": "id"
+  }
+}
