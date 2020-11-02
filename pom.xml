@@ -14,19 +14,18 @@
     <groupId>org.zipper.dtx</groupId>
     <artifactId>z-dtx</artifactId>
     <packaging>pom</packaging>
-    <version>${revision}</version>
+    <version>2.0.1</version>
 
 
     <modules>
         <module>z-dtx-transport</module>
         <module>z-dtx-discover</module>
         <module>z-dtx-job</module>
-        <module>z-helper-data-transport</module>
+        <module>z-dtx-plugins</module>
     </modules>
 
     <properties>
         <maven.test.skip>true</maven.test.skip>
-        <revision>2.0.1</revision>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <lombok.version>1.18.10</lombok.version>
@@ -42,7 +41,7 @@
         <z-helper-web>1.0.1</z-helper-web>
         <z-helper-quartz>1.0.1</z-helper-quartz>
         <z-helper-swagger>1.0.1</z-helper-swagger>
-        <z-helper-data-transport>1.0.0</z-helper-data-transport>
+        <z-dtx-plugins>2.0.1</z-dtx-plugins>
         <fluentd.version>0.3.2</fluentd.version>
         <logback-more-appenders.version>1.7.1</logback-more-appenders.version>
     </properties>
@@ -89,7 +88,7 @@
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
-            <!--    z-helper        -->
+            <!--    zipper        -->
             <dependency>
                 <groupId>org.zipper</groupId>
                 <artifactId>z-helper-util</artifactId>
@@ -111,9 +110,9 @@
                 <version>${z-helper-swagger}</version>
             </dependency>
             <dependency>
-                <groupId>org.zipper</groupId>
-                <artifactId>z-helper-data-transport-core</artifactId>
-                <version>${z-helper-data-transport}</version>
+                <groupId>org.zipper.dtx</groupId>
+                <artifactId>z-dtx-plugins-core</artifactId>
+                <version>${z-dtx-plugins}</version>
             </dependency>
             <!--      hutool      -->
             <dependency>
@@ -156,6 +155,7 @@
                 <artifactId>mssql-jdbc</artifactId>
                 <version>8.4.1.jre8</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 

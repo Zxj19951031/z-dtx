@@ -1,0 +1,22 @@
+{
+  "reader": {
+    "mysqlreader": {
+      "path": "plugin/reader/mysqlreader",
+      "class": "org.zipper.plugins.mysqlreader.MysqlReader"
+    },
+    "oraclereader": {
+      "path": "plugin/reader/oraclereader",
+      "class": "org.zipper.plugins.oraclereader.OracleReader"
+    }
+  },
+  "writer": {
+    "mysqlwriter": {
+      "path": "plugin/writer/mysqlwriter",
+      "class": "org.zipper.plugins.mysqlwriter.MysqlWriter"
+    },
+    "oraclewriter": {
+      "path": "plugin/writer/oraclewriter",
+      "class": "org.zipper.plugins.oraclewriter.OracleWriter"
+    }
+  }
+}
