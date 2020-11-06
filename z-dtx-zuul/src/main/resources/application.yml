@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: z-dtx-zuul
+
+zuul:
+  routes:
+    transport:
+      path: /api/transport/**
+      serviceId: z-dtx-transport-service
+      stripPrefix: true
+    job:
+      path: /api/job/**
+      serviceId: z-dtx-job-service
+      stripPrefix: true
+      sensitive-headers:
+    security:
+      path: /api/security/**
+      serviceId: z-dtx-security
+      stripPrefix: true
+      sensitive-headers:
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://127.0.0.1:8888/eureka/
+
+#hystrix:
+#  command:
+#    myusers-service:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: ...
+#
+#myusers-service:
+#  ribbon:
+#    NIWSServerListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
+#    listOfServers: https://example1.com,http://example2.com
+#    ConnectTimeout: 1000
+#    ReadTimeout: 3000
+#    MaxTotalHttpConnections: 500
+#    MaxConnectionsPerHost: 100

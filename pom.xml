@@ -22,6 +22,9 @@
         <module>z-dtx-discover</module>
         <module>z-dtx-job</module>
         <module>z-dtx-plugins</module>
+        <module>z-dtx-zuul</module>
+        <module>z-dtx-security</module>
+        <module>z-dtx-config</module>
     </modules>
 
     <properties>

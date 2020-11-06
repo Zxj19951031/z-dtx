@@ -12,6 +12,8 @@ spring:
 logging:
   level:
     ch.qos.logback.core: warn
+    org.springframework.security: debug
+
 
 mybatis:
   configuration:
@@ -25,3 +27,14 @@ eureka:
     register-with-eureka: true
     service-url:
       defaultZone: http://127.0.0.1:8888/eureka/
+
+security:
+  oauth2:
+    client:
+      id: ${spring.application.name}
+      client-secret: e10adc3949ba59abbe56e057f20f883e
+      grant-type: authorization_code,password,refresh_token
+      access-token-uri: http://127.0.0.1:8080/api/security/oauth/token
+    resource:
+      id: ${spring.application.name}
+      user-info-uri: http://127.0.0.1:8080/api/security/authenticate/user
