@@ -1,5 +1,5 @@
 server:
-  port: 8089
+  port: 9002
 spring:
   application:
     name: z-dtx-job-service
