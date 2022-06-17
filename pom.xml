@@ -34,7 +34,7 @@
         <lombok.version>1.18.10</lombok.version>
         <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.2.3</logback.version>
-        <fastjson.version>1.2.59</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <hutool.version>4.6.8</hutool.version>
         <mybatis.version>2.1.1</mybatis.version>
         <druid.version>1.1.18</druid.version>
